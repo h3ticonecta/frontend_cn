@@ -1,7 +1,6 @@
 import { Footer } from './components/Footer'
 import { GameGrid } from './components/GameGrid'
 import { Header } from './components/Header'
-import { HeroBanner } from './components/HeroBanner'
 import { PromoSection } from './components/PromoSection'
 import { ProvidersStrip } from './components/ProvidersStrip'
 import { PlayHubProvider, usePlayHub } from './context/PlayHubContext'
@@ -64,7 +63,6 @@ function PlayHubPage() {
     <div className="app-shell">
       <Header />
       <main>
-        <HeroBanner hero={data.hero} />
         <GameGrid games={data.games} />
         <PromoSection promotions={data.promotions} />
         <ProvidersStrip providers={data.providers} />
