@@ -1,0 +1,64 @@
+.roleta-table {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  align-items: stretch;
+}
+
+.roleta-table__nums {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.roleta-table__row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+}
+
+.roleta-table__cell {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.45rem 0.25rem;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  cursor: pointer;
+  color: #fff;
+  min-height: 2rem;
+  transition:
+    transform 0.12s,
+    box-shadow 0.12s;
+}
+
+.roleta-table__cell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.roleta-table__cell--selected {
+  outline: 2px solid #f5d76e;
+  outline-offset: 2px;
+}
+
+.roleta-table__cell--zero {
+  align-self: stretch;
+  min-width: 2.5rem;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  background: linear-gradient(180deg, #047857, #065f46);
+}
+
+.roleta-table__cell--red {
+  background: linear-gradient(180deg, #dc2626, #991b1b);
+}
+
+.roleta-table__cell--black {
+  background: linear-gradient(180deg, #334155, #0f172a);
+}
+
+.roleta-table__cell--green {
+  background: linear-gradient(180deg, #059669, #047857);
+}

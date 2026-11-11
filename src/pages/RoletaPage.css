@@ -62,6 +62,13 @@
   color: #fde68a;
 }
 
+.roleta-page__saldo-pending {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
 .roleta-page__erro {
   margin: 0 0 1rem;
   padding: 0.75rem 1rem;
@@ -284,3 +291,62 @@
   gap: 0.65rem;
   align-items: center;
 }
+
+.roleta-hint {
+  margin: -0.5rem 0 1rem;
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.roleta-outcome {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.roleta-outcome th,
+.roleta-outcome td {
+  padding: 0.4rem 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.roleta-outcome th {
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.roleta-outcome tr.win td:last-child {
+  color: #86efac;
+  font-weight: 700;
+}
+
+.roleta-tipos {
+  margin: 0 0 1rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.roleta-tipos ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.roleta-tipos code {
+  font-size: 0.75rem;
+  color: #fde68a;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+

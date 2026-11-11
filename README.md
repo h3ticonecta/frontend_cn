@@ -18,7 +18,19 @@ npm run build
 npm run preview
 ```
 
-> **Nota:** Projeto apenas visual/demonstração — sem integração de apostas ou pagamentos.
+## Roleta (API)
+
+Jogo demo em `#/roleta` (atalho pelo card **Roleta Brasil**). Fluxo:
+
+1. `GET /api/v1/roleta/?mesa=roleta-brasil` — limites, tipos e histórico  
+2. `POST /api/v1/roleta/sessoes/` — sessão com saldo demo (persistida em `localStorage`)  
+3. `POST /api/v1/roleta/girar/` — apostas + sorteio atômico  
+
+Em dev, o Vite faz proxy de `/api` para `http://127.0.0.1:8000` (Django). Rode o backend e `python manage.py seed_roleta`.
+
+Variável opcional: `VITE_API_URL` (produção).
+
+> **Nota:** Fichas virtuais apenas — sem dinheiro real.
 
 ## API (backend Django)
 
