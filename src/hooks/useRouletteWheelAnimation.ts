@@ -1,10 +1,12 @@
 import { useCallback, useRef, useState } from 'react'
 import {
   ballRotationToLand,
-  indexOfPocket,
-  pocketCenterAngle,
   wheelRotationToLand,
 } from '../lib/rouletteWheel'
+
+function easeOutQuart(t: number): number {
+  return 1 - (1 - t) ** 4
+}
 
 function waitMs(ms: number, signal?: AbortSignal): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -17,7 +19,8 @@ function waitMs(ms: number, signal?: AbortSignal): Promise<void> {
   })
 }
 
-const SETTLE_MS = 4800
+const SPIN_MS = 3200
+const SETTLE_BALL_ANGLE = -92
 
 export function useRouletteWheelAnimation() {
   const [wheelDeg, setWheelDeg] = useState(0)
@@ -28,8 +31,6 @@ export function useRouletteWheelAnimation() {
   const ballRef = useRef(0)
   const rafRef = useRef<number>(0)
   const abortRef = useRef<AbortController | null>(null)
-  const velWheelRef = useRef(0)
-  const velBallRef = useRef(0)
 
   const stopRaf = () => {
     if (rafRef.current) {
@@ -46,114 +47,68 @@ export function useRouletteWheelAnimation() {
     setBallRadiusFactor(ballR)
   }
 
-  const runFastSpin = useCallback(() => {
-    let last = performance.now()
-    velWheelRef.current = 320
-    velBallRef.current = -480
-    setBallRadiusFactor(1.04)
+  const animateSingleSpin = useCallback(
+    (targetWheel: number, targetBall: number, signal?: AbortSignal) => {
+      const fromW = wheelRef.current
+      const fromB = ballRef.current
+      const start = performance.now()
 
-    const tick = (now: number) => {
-      const dt = Math.min((now - last) / 1000, 0.05)
-      last = now
-      velWheelRef.current = Math.max(velWheelRef.current * 1.002, 80)
-      velBallRef.current *= 1.0015
-      const w = wheelRef.current + velWheelRef.current * dt
-      const b = ballRef.current + velBallRef.current * dt
-      applyFrame(w, b, 1.04)
-      rafRef.current = requestAnimationFrame(tick)
-    }
-    rafRef.current = requestAnimationFrame(tick)
-  }, [])
+      return new Promise<void>((resolve) => {
+        const step = (now: number) => {
+          if (signal?.aborted) {
+            resolve()
+            return
+          }
+          const p = Math.min(1, (now - start) / SPIN_MS)
+          const e = easeOutQuart(p)
 
-  const finishSpin = useCallback(async (numero: number, signal?: AbortSignal) => {
-    stopRaf()
+          let w = fromW + (targetWheel - fromW) * e
+          let b = fromB + (targetBall - fromB) * e
 
-    const settleBallAngle = -92
-    let targetWheel = wheelRotationToLand(wheelRef.current, numero, settleBallAngle, 4)
-    while (targetWheel <= wheelRef.current) {
-      targetWheel += 360
-    }
-    const targetBall = ballRotationToLand(ballRef.current, targetWheel, numero, 7)
+          if (w < wheelRef.current) w = wheelRef.current
+          const ballR = 1.04 - p * 0.05
 
-    let velW = Math.max(velWheelRef.current || 220, 60)
-    let velB = velBallRef.current || -300
+          applyFrame(w, b, ballR)
 
-    const startWheel = wheelRef.current
-    const t0 = performance.now()
-
-    await new Promise<void>((resolve) => {
-      const step = (now: number) => {
-        if (signal?.aborted) {
-          resolve()
-          return
+          if (p >= 1) {
+            applyFrame(targetWheel, targetBall, 1)
+            resolve()
+            return
+          }
+          rafRef.current = requestAnimationFrame(step)
         }
-
-        const elapsed = now - t0
-        const p = Math.min(1, elapsed / SETTLE_MS)
-        const dt = 1 / 60
-
-        const friction = 0.97 - p * 0.04
-        velW = Math.max(velW * friction, 0)
-        velB *= friction
-
-        const coupling = p > 0.45 ? Math.min(1, (p - 0.45) / 0.55) : 0
-        const pocketAngle =
-          pocketCenterAngle(indexOfPocket(numero)) + wheelRef.current
-        const slip = ballRef.current - pocketAngle
-        velB += coupling * (-velW * 0.45 - velB * 0.12 - slip * 0.02) * dt * 60
-
-        let w = wheelRef.current
-        const remaining = targetWheel - w
-        if (remaining > 0.5) {
-          const steer = p > 0.65 ? Math.min(1, (p - 0.65) / 0.35) : 0
-          const cruise = velW * dt
-          const guided = remaining * steer * 0.08
-          w += Math.max(cruise, guided, 0.15)
-          w = Math.min(w, targetWheel)
-        } else {
-          w = targetWheel
-          velW = 0
-        }
-
-        w = Math.max(w, startWheel)
-        let b = ballRef.current + velB * dt
-
-        const ballSteer = p > 0.78 ? ((p - 0.78) / 0.22) ** 2 : 0
-        const ballGap = targetBall - b
-        if (ballGap > 0) {
-          b += ballGap * ballSteer * 0.1
-        } else {
-          b = targetBall
-        }
-
-        const ballR = 1.04 - p * 0.06
-        applyFrame(w, b, ballR)
-
-        if (p >= 1) {
-          applyFrame(targetWheel, targetBall, 1)
-          resolve()
-          return
-        }
-
         rafRef.current = requestAnimationFrame(step)
-      }
-
-      rafRef.current = requestAnimationFrame(step)
-    })
-
-    if (signal?.aborted) return
-    setIsAnimating(false)
-    setBallRadiusFactor(1)
-  }, [])
+      })
+    },
+    [],
+  )
 
   const beginSpin = useCallback(() => {
     abortRef.current?.abort()
     abortRef.current = new AbortController()
     setIsAnimating(true)
+    setBallRadiusFactor(1.02)
     stopRaf()
-    runFastSpin()
     return abortRef.current.signal
-  }, [runFastSpin])
+  }, [])
+
+  const finishSpin = useCallback(
+    async (numero: number, signal?: AbortSignal) => {
+      stopRaf()
+
+      const fromW = wheelRef.current
+      let targetWheel = wheelRotationToLand(fromW, numero, SETTLE_BALL_ANGLE, 1)
+      if (targetWheel <= fromW) targetWheel = fromW + 360
+
+      const targetBall = ballRotationToLand(ballRef.current, targetWheel, numero, 1)
+
+      await animateSingleSpin(targetWheel, targetBall, signal)
+      if (signal?.aborted) return
+      setIsAnimating(false)
+      setBallRadiusFactor(1)
+    },
+    [animateSingleSpin],
+  )
 
   const cancelSpin = useCallback(() => {
     abortRef.current?.abort()

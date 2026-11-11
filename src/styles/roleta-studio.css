@@ -24,6 +24,41 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 24px 48px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+@media (min-width: 720px) {
+  .roleta-studio__stage {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem 1.75rem;
+  }
+}
+
+.roleta-studio__wheel-col {
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.roleta-studio__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: min(100%, 240px);
+  flex-shrink: 0;
+}
+
+.roleta-studio__spin {
+  width: 100%;
+}
+
+.roleta-studio__action {
+  width: 100%;
   text-align: center;
 }
 
@@ -67,11 +102,10 @@
   border-color: rgba(212, 175, 55, 0.25);
 }
 
-.roleta-actions .btn--gold {
+.roleta-studio__spin {
   box-shadow:
     0 4px 24px rgba(212, 175, 55, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  min-width: 12rem;
 }
 
 @media (min-width: 900px) {

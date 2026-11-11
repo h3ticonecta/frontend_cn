@@ -201,7 +201,7 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
         sessaoId,
         pendentes.map(({ tipo, valor, numero }) => ({ tipo, valor, numero })),
       )
-      await wheelAnim.ensureMinDuration(startedAt, 1800, signal)
+      await wheelAnim.ensureMinDuration(startedAt, 400, signal)
       await wheelAnim.finishSpin(result.resultado.numero, signal)
       setUltimoGiro(result)
       setSaldo(result.sessao.saldo_depois)
@@ -284,19 +284,41 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
       )}
 
       <section className="roleta-studio__stage" aria-label="Mesa da roleta">
-        <p className="roleta-studio__stage-label">Mesa ao vivo · demo</p>
-        <RoletaWheelVisual
-          vermelhos={vermelhos}
-          wheelRotation={wheelAnim.wheelDeg}
-          ballRotation={wheelAnim.ballDeg}
-          ballRadiusFactor={wheelAnim.ballRadiusFactor}
-          isAnimating={wheelAnim.isAnimating || spinning}
-          highlightNumber={
-            !wheelAnim.isAnimating && !spinning
-              ? (ultimoGiro?.resultado.numero ?? numeroStraight)
-              : null
-          }
-        />
+        <div className="roleta-studio__wheel-col">
+          <p className="roleta-studio__stage-label">Mesa ao vivo · demo</p>
+          <RoletaWheelVisual
+            vermelhos={vermelhos}
+            wheelRotation={wheelAnim.wheelDeg}
+            ballRotation={wheelAnim.ballDeg}
+            ballRadiusFactor={wheelAnim.ballRadiusFactor}
+            isAnimating={wheelAnim.isAnimating || spinning}
+            highlightNumber={
+              !wheelAnim.isAnimating && !spinning
+                ? (ultimoGiro?.resultado.numero ?? numeroStraight)
+                : null
+            }
+          />
+        </div>
+        <div className="roleta-studio__actions" aria-label="Ações da mesa">
+          <button
+            type="button"
+            className="btn btn--gold btn--lg roleta-studio__spin"
+            disabled={spinning || pendentes.length === 0}
+            onClick={girar}
+          >
+            {spinning ? 'Girando…' : 'Girar roleta'}
+          </button>
+          <a href="#/" className="btn btn--ghost roleta-studio__action">
+            Voltar ao lobby
+          </a>
+          <button
+            type="button"
+            className="btn btn--ghost roleta-studio__action"
+            onClick={novaSessao}
+          >
+            Nova sessão (reset fichas)
+          </button>
+        </div>
       </section>
 
       <div className="roleta-page__grid">
@@ -445,22 +467,6 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
             </ul>
           </details>
 
-          <div className="roleta-actions">
-            <button
-              type="button"
-              className="btn btn--gold btn--lg"
-              disabled={spinning || pendentes.length === 0}
-              onClick={girar}
-            >
-              {spinning ? 'Girando…' : 'Girar roleta'}
-            </button>
-            <a href="#/" className="btn btn--ghost">
-              Voltar ao lobby
-            </a>
-            <button type="button" className="btn btn--ghost" onClick={novaSessao}>
-              Nova sessão (reset fichas)
-            </button>
-          </div>
         </section>
       </div>
     </main>
