@@ -71,35 +71,49 @@ function assertApiReady(): void {
   }
 }
 
-async function parseResponseJson<T>(res: Response): Promise<T> {
-  const text = await res.text()
-  const trimmed = text.trim()
-  if (!trimmed) {
-    throw new Error('A API respondeu vazio.')
-  }
-  if (trimmed.startsWith('<') || trimmed.toLowerCase().startsWith('<!doctype')) {
-    if (apiBaseIssue === 'internal_hostname' || apiBaseIssue === 'missing_protocol') {
-      throw new Error(getApiSetupMessage())
-    }
-    if (apiBaseIssue === 'missing') {
-      throw new Error(MESSAGES.missing)
-    }
-    throw new Error(
-      'A API retornou HTML em vez de JSON. Confira se VITE_API_URL aponta para a URL pública do Django (não o frontend) e se /api/v1/home/ devolve JSON no navegador.',
+function errorFromHttpBody(status: number, text: string): string {
+  if (
+    text.includes('DisallowedHost') ||
+    text.includes('Invalid HTTP_HOST header') ||
+    text.includes('ALLOWED_HOSTS')
+  ) {
+    return (
+      'Django rejeitou o domínio (ALLOWED_HOSTS). No Railway, serviço backend: defina ' +
+      'DJANGO_ALLOWED_HOSTS=backendcn-dev.up.railway.app (ou redeploy do backend com suporte a .up.railway.app) e CORS_ALLOWED_ORIGINS com a URL do frontend.'
     )
   }
-  try {
-    return JSON.parse(text) as T
-  } catch {
-    throw new Error('Resposta da API não é JSON válido.')
+  const trimmed = text.trim()
+  if (trimmed.startsWith('{')) {
+    try {
+      const data = JSON.parse(trimmed) as Record<string, unknown>
+      if (data.detail) return `API ${status}: ${String(data.detail)}`
+      if (data.erro && typeof data.erro === 'object' && 'mensagem' in data.erro) {
+        return `API ${status}: ${String((data.erro as { mensagem: string }).mensagem)}`
+      }
+    } catch {
+      /* ignore */
+    }
   }
+  return `API respondeu ${status}`
 }
 
 export async function fetchHome(signal?: AbortSignal): Promise<HomeData> {
   assertApiReady()
   const res = await fetch(apiUrl('/api/v1/home/'), { signal })
+  const text = await res.text()
   if (!res.ok) {
-    throw new Error(`API respondeu ${res.status}`)
+    throw new Error(errorFromHttpBody(res.status, text))
   }
-  return parseResponseJson<HomeData>(res)
+  const trimmed = text.trim()
+  if (!trimmed) {
+    throw new Error('A API respondeu vazio.')
+  }
+  if (trimmed.startsWith('<') || trimmed.toLowerCase().startsWith('<!doctype')) {
+    throw new Error(errorFromHttpBody(res.status, text))
+  }
+  try {
+    return JSON.parse(text) as HomeData
+  } catch {
+    throw new Error('Resposta da API não é JSON válido.')
+  }
 }

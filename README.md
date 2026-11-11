@@ -49,7 +49,12 @@ Em produção, aponte `VITE_API_URL` para o host **público** do Django (sem `/`
 2. No **frontend** → **Variables**: `VITE_API_URL` = `https://SEU-DOMINIO-PUBLICO.up.railway.app` (com `https://`, sem `/` no final).
 3. **Não use** `*.railway.internal` — isso só funciona entre containers no Railway; o browser do usuário não alcança esse host.
 4. **Redeploy** do frontend após mudar `VITE_*` (valor é embutido no build).
-5. No **Django**, CORS + `CSRF_TRUSTED_ORIGINS` com a URL do frontend (ex. `https://frontendcn-dev.up.railway.app`).
+5. No **backend** (Railway → Variables):
+   - `DJANGO_ALLOWED_HOSTS` = `backendcn-dev.up.railway.app`
+   - `CORS_ALLOWED_ORIGINS` = `https://frontendcn-dev.up.railway.app`
+   - `DJANGO_DEBUG` = `false`
+
+Erro **400** com *API respondeu 400*: quase sempre **DisallowedHost** — o Django não reconhece o domínio público do backend.
 
 Teste no navegador: `https://SEU-BACKEND.up.railway.app/api/v1/home/` deve retornar JSON.
 
