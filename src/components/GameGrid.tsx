@@ -12,7 +12,9 @@ type Props = {
 }
 
 export function GameGrid({ games, categories, popularIds, newIds }: Props) {
-  const [category, setCategory] = useState<GameCategory>('populares')
+  const [category, setCategory] = useState<GameCategory>(
+    popularIds.length > 0 ? 'populares' : 'todos',
+  )
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
@@ -75,7 +77,11 @@ export function GameGrid({ games, categories, popularIds, newIds }: Props) {
       </div>
 
       {filtered.length === 0 && (
-        <p className="games-empty">Nenhum jogo encontrado. Tente outra busca.</p>
+        <p className="games-empty">
+          {games.length === 0
+            ? 'Nenhum jogo na API. No backend, rode python manage.py seed_playhub (e seed_roleta).'
+            : 'Nenhum jogo encontrado. Tente outra categoria ou busca.'}
+        </p>
       )}
     </section>
   )
