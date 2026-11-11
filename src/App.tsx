@@ -6,7 +6,7 @@ import { LiveStrip } from './components/LiveStrip'
 import { PromoSection } from './components/PromoSection'
 import { ProvidersStrip } from './components/ProvidersStrip'
 import { PlayHubProvider, usePlayHub } from './context/PlayHubContext'
-import { API_HINT } from './api/playhub'
+import { API_HINT, isProductionApiMisconfigured } from './api/playhub'
 import { isRoletaRoute, useHashRoute } from './hooks/useHashRoute'
 import { RoletaPage } from './pages/RoletaPage'
 import './App.css'
@@ -33,11 +33,15 @@ function PlayHubPage() {
         <main className="app-status app-status--error" aria-live="assertive">
           <p className="app-status__text">Não foi possível conectar à API.</p>
           <p className="app-status__hint">{error}</p>
-          <p className="app-status__hint">
-            Verifique o backend Django (
-            <code className="app-status__code">python manage.py runserver</code>
-            ). API: <code className="app-status__code">{API_HINT}</code>.
-          </p>
+          {isProductionApiMisconfigured ? (
+            <p className="app-status__hint">{API_HINT}</p>
+          ) : (
+            <p className="app-status__hint">
+              Verifique o backend Django (
+              <code className="app-status__code">python manage.py runserver</code>
+              ). API: <code className="app-status__code">{API_HINT}</code>.
+            </p>
+          )}
           <button type="button" className="app-status__retry" onClick={retry}>
             Tentar novamente
           </button>

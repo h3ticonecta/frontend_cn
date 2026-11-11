@@ -41,7 +41,15 @@ A landing consome `GET /api/v1/home/` do repositório `backend_cn`.
 
 Em desenvolvimento o Vite faz **proxy** de `/api` → `http://127.0.0.1:8000` (mesma origem, sem CORS). `.env.development` mantém `VITE_API_URL` vazio.
 
-Em produção, copie `.env.production.example` para `.env.production` e aponte `VITE_API_URL` para o host real da API.
+Em produção, aponte `VITE_API_URL` para o host **público** do Django (sem `/` no final).
+
+### Deploy no Railway (frontend)
+
+1. No serviço do **frontend**, em **Variables**, crie `VITE_API_URL` = URL do backend (ex. `https://…up.railway.app`).
+2. **Importante:** o Vite lê `VITE_*` só no **build**. Depois de criar ou mudar a variável, dispare um **novo deploy** (rebuild).
+3. No **Django**, configure **CORS** (e `CSRF_TRUSTED_ORIGINS` se usar sessão) para `https://frontendcn-dev.up.railway.app` (ou o domínio do seu frontend).
+
+Sem `VITE_API_URL`, o browser chama `https://seu-frontend/api/...`, o host estático devolve `index.html` e aparece o erro *Unexpected token '&lt;'… is not valid JSON*.
 
 Edite jogos, promoções e ao vivo no **Django Admin** (`/admin/`); o frontend reflete na próxima carga.
 
