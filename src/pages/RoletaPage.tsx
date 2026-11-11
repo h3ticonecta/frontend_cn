@@ -9,6 +9,7 @@ import {
 } from '../api/roleta'
 import { loadRoletaBootstrap } from '../lib/loadRoletaBootstrap'
 import { RoletaTable } from '../components/roleta/RoletaTable'
+import { RoletaWinCelebration } from '../components/roleta/RoletaWinCelebration'
 import { RoletaWheelVisual } from '../components/roleta/RoletaWheelVisual'
 import '../components/roleta/RoletaBetsLayout.css'
 import '../components/roleta/RoletaWheelVisual.css'
@@ -52,6 +53,13 @@ function corLabel(cor: string) {
   return 'Verde'
 }
 
+function giroTeveVitoria(result: RoletaGiroResult): boolean {
+  if (result.apostas.some((a) => a.ganhou)) return true
+  const pago = Number(result.totais.pago)
+  const liquido = Number(result.totais.lucro_liquido)
+  return pago > 0 || liquido > 0
+}
+
 function labelAposta(tipo: string, numero?: number) {
   const base = TIPO_APOSTA_LABEL[tipo] ?? tipo
   if (tipo === 'straight' && numero != null) return `${base} (${numero})`
@@ -70,6 +78,7 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
   const [loading, setLoading] = useState(true)
   const [spinning, setSpinning] = useState(false)
   const [erro, setErro] = useState<string | null>(null)
+  const [celebrationKey, setCelebrationKey] = useState(0)
   const wheelAnim = useRouletteWheelAnimation()
 
   const mesa = config?.mesa
@@ -204,6 +213,9 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
       await wheelAnim.ensureMinDuration(startedAt, 400, signal)
       await wheelAnim.finishSpin(result.resultado.numero, signal)
       setUltimoGiro(result)
+      if (giroTeveVitoria(result)) {
+        setCelebrationKey((k) => k + 1)
+      }
       setSaldo(result.sessao.saldo_depois)
       setPendentes([])
       setNumeroStraight(result.resultado.numero)
@@ -256,6 +268,7 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
 
   return (
     <main className="roleta-page" id="roleta-game">
+      <RoletaWinCelebration burstKey={celebrationKey} />
       <header className="roleta-page__head">
         <div>
           <p className="roleta-page__eyebrow">Demo · fichas virtuais</p>
