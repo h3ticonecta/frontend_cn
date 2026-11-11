@@ -9,6 +9,10 @@ import {
 } from '../api/roleta'
 import { loadRoletaBootstrap } from '../lib/loadRoletaBootstrap'
 import { RoletaTable } from '../components/roleta/RoletaTable'
+import { RoletaWheelVisual } from '../components/roleta/RoletaWheelVisual'
+import '../components/roleta/RoletaBetsLayout.css'
+import '../components/roleta/RoletaWheelVisual.css'
+import { useRouletteWheelAnimation } from '../hooks/useRouletteWheelAnimation'
 import { TIPO_APOSTA_LABEL } from '../lib/roletaLayout'
 import {
   formatApostaValor,
@@ -65,6 +69,7 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
   const [loading, setLoading] = useState(true)
   const [spinning, setSpinning] = useState(false)
   const [erro, setErro] = useState<string | null>(null)
+  const wheelAnim = useRouletteWheelAnimation()
 
   const mesa = config?.mesa
   const vermelhos = config?.numeros.vermelhos ?? []
@@ -188,11 +193,15 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
 
     setErro(null)
     setSpinning(true)
+    const startedAt = Date.now()
+    const signal = wheelAnim.beginSpin()
     try {
       const result = await spinRoleta(
         sessaoId,
         pendentes.map(({ tipo, valor, numero }) => ({ tipo, valor, numero })),
       )
+      await wheelAnim.ensureMinDuration(startedAt, 2200, signal)
+      await wheelAnim.finishSpin(result.resultado.numero, signal)
       setUltimoGiro(result)
       setSaldo(result.sessao.saldo_depois)
       setPendentes([])
@@ -200,6 +209,8 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
       const cfg = await fetchRoletaConfig(mesaSlugApi)
       setConfig(cfg)
     } catch (e) {
+      wheelAnim.cancelSpin()
+      if (e instanceof DOMException && e.name === 'AbortError') return
       setErro(e instanceof Error ? e.message : 'Erro ao girar.')
     } finally {
       setSpinning(false)
@@ -354,16 +365,32 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
             />
           </label>
 
-          <RoletaTable
-            vermelhos={vermelhos}
-            selectedStraight={numeroStraight}
-            onStraight={addStraightFromTable}
-          />
-
-          <p className="roleta-hint">
-            Toque em um número para apostar <strong>straight</strong> (35:1). O{' '}
-            <strong>0</strong> faz perder apostas externas.
-          </p>
+          <div className="roleta-bets-layout">
+            <div className="roleta-bets-layout__wheel">
+              <RoletaWheelVisual
+                vermelhos={vermelhos}
+                wheelRotation={wheelAnim.wheelDeg}
+                ballRotation={wheelAnim.ballDeg}
+                isAnimating={wheelAnim.isAnimating || spinning}
+                highlightNumber={
+                  !wheelAnim.isAnimating && !spinning
+                    ? (ultimoGiro?.resultado.numero ?? numeroStraight)
+                    : null
+                }
+              />
+            </div>
+            <div className="roleta-bets-layout__table">
+              <RoletaTable
+                vermelhos={vermelhos}
+                selectedStraight={numeroStraight}
+                onStraight={addStraightFromTable}
+              />
+              <p className="roleta-hint">
+                Toque em um número para apostar <strong>straight</strong> (35:1). O{' '}
+                <strong>0</strong> faz perder apostas externas.
+              </p>
+            </div>
+          </div>
 
           <div className="roleta-quick">
             {OUTSIDE_BETS.map((b) => (

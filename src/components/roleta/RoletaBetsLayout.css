@@ -1,0 +1,24 @@
+.roleta-bets-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 720px) {
+  .roleta-bets-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .roleta-bets-layout__wheel {
+    flex: 0 0 min(42%, 280px);
+    position: sticky;
+    top: 5.5rem;
+  }
+
+  .roleta-bets-layout__table {
+    flex: 1;
+    min-width: 0;
+  }
+}
