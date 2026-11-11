@@ -1,5 +1,5 @@
 import type { Game } from '../types/playhub'
-import { roletaHashForGame } from '../hooks/useHashRoute'
+import { fortuneGemsHash, fortuneGemsHashForGame, roletaHashForGame } from '../hooks/useHashRoute'
 import './GameCard.css'
 
 const BADGE_LABEL: Record<NonNullable<Game['badge']>, string> = {
@@ -14,11 +14,22 @@ type Props = {
 
 export function GameCard({ game }: Props) {
   const [from, to] = game.gradient
-  const playable = game.play?.kind === 'roleta'
+  const isFortuneGemsFallback = game.id === 'fortune-gems'
+  const playable =
+    game.play?.kind === 'roleta' || game.play?.kind === 'slot' || isFortuneGemsFallback
 
   const openGame = () => {
-    if (!game.play || game.play.kind !== 'roleta') return
-    window.location.hash = roletaHashForGame(game.play, game.id)
+    if (game.play?.kind === 'roleta') {
+      window.location.hash = roletaHashForGame(game.play, game.id)
+      return
+    }
+    if (game.play?.kind === 'slot') {
+      window.location.hash = fortuneGemsHashForGame(game.play, game.id)
+      return
+    }
+    if (isFortuneGemsFallback) {
+      window.location.hash = fortuneGemsHash(game.id)
+    }
   }
 
   return (

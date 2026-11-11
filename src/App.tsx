@@ -7,7 +7,14 @@ import { PromoSection } from './components/PromoSection'
 import { ProvidersStrip } from './components/ProvidersStrip'
 import { PlayHubProvider, usePlayHub } from './context/PlayHubContext'
 import { API_HINT, isProductionApiMisconfigured } from './api/playhub'
-import { isRoletaRoute, parseRoletaGameSlug, useHashRoute } from './hooks/useHashRoute'
+import {
+  isFortuneGemsRoute,
+  isRoletaRoute,
+  parseFortuneGemsGameSlug,
+  parseRoletaGameSlug,
+  useHashRoute,
+} from './hooks/useHashRoute'
+import { FortuneGemsPage } from './pages/FortuneGemsPage'
 import { RoletaPage } from './pages/RoletaPage'
 import './App.css'
 
@@ -73,6 +80,17 @@ function PlayHubPage() {
 
 function App() {
   const hash = useHashRoute()
+
+  if (isFortuneGemsRoute(hash)) {
+    const gameSlug = parseFortuneGemsGameSlug(hash)
+    return (
+      <div className="app-shell app-shell--fortune-gems">
+        <Header />
+        <FortuneGemsPage gameSlug={gameSlug} key={gameSlug} />
+        <Footer />
+      </div>
+    )
+  }
 
   if (isRoletaRoute(hash)) {
     const gameSlug = parseRoletaGameSlug(hash)

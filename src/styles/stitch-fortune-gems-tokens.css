@@ -1,0 +1,40 @@
+/**
+ * Neon Vegas slot — tokens do Stitch (tailwind-config da tela Cassino Slot Machine Moderno).
+ * Projeto: Modern Game Recreation (2052652935197791329)
+ */
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,700&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@600;700&display=swap');
+
+.fg-page,
+.fg-page * {
+  box-sizing: border-box;
+}
+
+.fg-page {
+  --fg-neon-red: #ff1e56;
+  --fg-neon-cyan: #00f0ff;
+  --fg-neon-gold: #ffd700;
+  --fg-neon-purple: #9d4edd;
+  --fg-neon-green: #00ffa3;
+
+  --fg-casino-dark: #08060d;
+  --fg-casino-panel: #120f1d;
+  --fg-casino-card: #1b162b;
+  --fg-casino-border: #2e2648;
+
+  --fg-font-display: 'Orbitron', sans-serif;
+  --fg-font-cyber: 'Chakra Petch', sans-serif;
+  --fg-font-hud: 'Rajdhani', sans-serif;
+
+  --fg-shadow-neon-red: 0 0 25px rgba(255, 30, 86, 0.6), inset 0 0 15px rgba(255, 30, 86, 0.4);
+  --fg-shadow-neon-cyan: 0 0 25px rgba(0, 240, 255, 0.6), inset 0 0 10px rgba(0, 240, 255, 0.3);
+  --fg-shadow-neon-gold: 0 0 30px rgba(255, 215, 0, 0.5), inset 0 0 12px rgba(255, 215, 0, 0.3);
+  --fg-shadow-reel-depth: inset 0 25px 20px -10px rgba(0, 0, 0, 0.8),
+    inset 0 -25px 20px -10px rgba(0, 0, 0, 0.8);
+
+  --fg-page-pad-x: clamp(1rem, 3vw, 1.5rem);
+  --fg-page-pad-y: clamp(1rem, 2.5vw, 1.5rem);
+
+  font-family: var(--fg-font-cyber);
+  color: #f1f5f9;
+  background: var(--fg-casino-dark);
+}

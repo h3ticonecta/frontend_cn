@@ -1,4 +1,4 @@
-import type { Game, GamePlayMeta } from './playhub'
+import type { Game, GamePlayMetaRoleta } from './playhub'
 
 export interface RoletaMesa {
   slug: string
@@ -34,7 +34,7 @@ export interface RoletaConfig {
 /** GET /api/v1/games/roleta-brasil/ */
 export interface RoletaGameDetail {
   card: Game
-  play: GamePlayMeta | null
+  play: GamePlayMetaRoleta | null
   roleta?: RoletaConfig
 }
 

@@ -10,7 +10,7 @@ export type GameCategory =
 export type GameBadge = 'novo' | 'hot' | 'jackpot' | null
 
 /** Metadados `play` do card (home e GET /games/{slug}/). */
-export interface GamePlayMeta {
+export interface GamePlayMetaRoleta {
   kind: 'roleta'
   mesa_slug: string
   client_route: string
@@ -24,6 +24,21 @@ export interface GamePlayMeta {
     sessao_detail?: string
   }
 }
+
+export interface GamePlayMetaSlot {
+  kind: 'slot'
+  slot_slug: string
+  client_route: string
+  api: {
+    config: string
+    sessoes: string
+    girar: string
+    card: string
+    sessao_detail?: string
+  }
+}
+
+export type GamePlayMeta = GamePlayMetaRoleta | GamePlayMetaSlot
 
 export interface Game {
   id: string

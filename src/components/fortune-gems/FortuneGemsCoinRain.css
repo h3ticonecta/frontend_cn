@@ -1,0 +1,26 @@
+.fg-coin-rain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  overflow: hidden;
+}
+
+.fg-coin-rain__coin {
+  position: absolute;
+  top: -10%;
+  animation: fg-coin-fall 2.8s ease-in forwards;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+  opacity: 0.95;
+}
+
+@keyframes fg-coin-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(115vh) rotate(720deg);
+    opacity: 0.35;
+  }
+}

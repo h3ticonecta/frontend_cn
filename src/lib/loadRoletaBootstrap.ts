@@ -1,11 +1,11 @@
 import { fetchRoletaGameDetail, normalizeRoletaConfig } from '../api/games'
 import { fetchRoletaConfig } from '../api/roleta'
-import type { GamePlayMeta } from '../types/playhub'
+import type { GamePlayMetaRoleta } from '../types/playhub'
 import type { RoletaConfig } from '../types/roleta'
 
 export type RoletaBootstrap = {
   gameSlug: string
-  play: GamePlayMeta
+  play: GamePlayMetaRoleta
   config: RoletaConfig
   cardTitle: string
 }

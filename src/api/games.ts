@@ -1,3 +1,4 @@
+import type { FortuneGemsConfig, FortuneGemsGameDetail } from '../types/fortuneGems'
 import type { RoletaConfig, RoletaGameDetail } from '../types/roleta'
 import { apiUrl } from './playhub'
 
@@ -23,6 +24,21 @@ export async function fetchRoletaGameDetail(
 
 /** Normaliza config da mesa (histórico opcional no card aggregate). */
 export function normalizeRoletaConfig(partial: RoletaConfig): RoletaConfig {
+  return {
+    ...partial,
+    historico_recente: partial.historico_recente ?? [],
+  }
+}
+
+export async function fetchFortuneGemsGameDetail(
+  gameSlug: string,
+  signal?: AbortSignal,
+): Promise<FortuneGemsGameDetail> {
+  const res = await fetch(apiUrl(`/api/v1/games/${encodeURIComponent(gameSlug)}/`), { signal })
+  return parseJson(res)
+}
+
+export function normalizeFortuneGemsConfig(partial: FortuneGemsConfig): FortuneGemsConfig {
   return {
     ...partial,
     historico_recente: partial.historico_recente ?? [],

@@ -7,6 +7,10 @@
     #0a0e17;
 }
 
+.app-shell--fortune-gems {
+  background: #08060d;
+}
+
 .app-shell main {
   flex: 1;
 }
