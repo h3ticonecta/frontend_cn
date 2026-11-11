@@ -9,17 +9,19 @@ export type GameCategory =
 
 export type GameBadge = 'novo' | 'hot' | 'jackpot' | null
 
+/** Metadados `play` do card (home e GET /games/{slug}/). */
 export interface GamePlayMeta {
   kind: 'roleta'
   mesa_slug: string
   client_route: string
-  contrato: string
+  /** Legado / docs no backend; opcional no JSON. */
+  contrato?: string
   api: {
     config: string
     sessoes: string
-    sessao_detail: string
     girar: string
     card: string
+    sessao_detail?: string
   }
 }
 
@@ -32,6 +34,7 @@ export interface Game {
   rtp?: string
   gradient: [string, string]
   icon: string
+  /** `null` para jogos só vitrine. */
   play: GamePlayMeta | null
 }
 

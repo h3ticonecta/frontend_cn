@@ -7,6 +7,7 @@ import {
   getStoredRoletaSessionId,
   spinRoleta,
 } from '../api/roleta'
+import { loadRoletaBootstrap } from '../lib/loadRoletaBootstrap'
 import { RoletaTable } from '../components/roleta/RoletaTable'
 import { TIPO_APOSTA_LABEL } from '../lib/roletaLayout'
 import {
@@ -21,7 +22,9 @@ import './RoletaPage.css'
 
 type PendingBet = ApostaPayload & { key: string }
 
-const MESA_SLUG = 'roleta-brasil'
+type RoletaPageProps = {
+  gameSlug: string
+}
 
 const OUTSIDE_BETS: { tipo: string; label: string; cls?: string }[] = [
   { tipo: 'red', label: 'Vermelho', cls: 'red' },
@@ -50,8 +53,9 @@ function labelAposta(tipo: string, numero?: number) {
   return base
 }
 
-export function RoletaPage() {
+export function RoletaPage({ gameSlug }: RoletaPageProps) {
   const [config, setConfig] = useState<RoletaConfig | null>(null)
+  const [mesaSlugApi, setMesaSlugApi] = useState('roleta-brasil')
   const [sessaoId, setSessaoId] = useState<string | null>(null)
   const [saldo, setSaldo] = useState<string>('—')
   const [valorAposta, setValorAposta] = useState('10.00')
@@ -114,10 +118,12 @@ export function RoletaPage() {
     ;(async () => {
       try {
         setLoading(true)
-        const cfg = await fetchRoletaConfig(MESA_SLUG, ctrl.signal)
-        setConfig(cfg)
-        setValorAposta(cfg.mesa.aposta_minima)
-        await carregarSessao(cfg.mesa.slug)
+        setErro(null)
+        const boot = await loadRoletaBootstrap(gameSlug, ctrl.signal)
+        setMesaSlugApi(boot.play.mesa_slug)
+        setConfig(boot.config)
+        setValorAposta(boot.config.mesa.aposta_minima)
+        await carregarSessao(boot.config.mesa.slug)
       } catch (e) {
         setErro(e instanceof Error ? e.message : 'Falha ao carregar a roleta.')
       } finally {
@@ -125,7 +131,7 @@ export function RoletaPage() {
       }
     })()
     return () => ctrl.abort()
-  }, [carregarSessao])
+  }, [carregarSessao, gameSlug])
 
   const addBet = (tipo: string, numero?: number) => {
     if (!mesa) return
@@ -191,7 +197,7 @@ export function RoletaPage() {
       setSaldo(result.sessao.saldo_depois)
       setPendentes([])
       setNumeroStraight(result.resultado.numero)
-      const cfg = await fetchRoletaConfig(MESA_SLUG)
+      const cfg = await fetchRoletaConfig(mesaSlugApi)
       setConfig(cfg)
     } catch (e) {
       setErro(e instanceof Error ? e.message : 'Erro ao girar.')

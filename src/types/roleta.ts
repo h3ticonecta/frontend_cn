@@ -1,3 +1,5 @@
+import type { Game, GamePlayMeta } from './playhub'
+
 export interface RoletaMesa {
   slug: string
   nome: string
@@ -15,11 +17,25 @@ export interface TipoAposta {
   requer_numero: boolean
 }
 
+export interface RoletaHistoricoItem {
+  numero: number
+  cor: string
+  em: string
+}
+
 export interface RoletaConfig {
   mesa: RoletaMesa
   tipos_aposta: TipoAposta[]
   numeros: { min: number; max: number; vermelhos: number[] }
-  historico_recente: { numero: number; cor: string; em: string }[]
+  /** Presente em GET /roleta/; pode faltar em GET /games/{slug}/ → `roleta`. */
+  historico_recente?: RoletaHistoricoItem[]
+}
+
+/** GET /api/v1/games/roleta-brasil/ */
+export interface RoletaGameDetail {
+  card: Game
+  play: GamePlayMeta | null
+  roleta?: RoletaConfig
 }
 
 export interface RoletaSessao {

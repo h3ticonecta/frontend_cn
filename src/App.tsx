@@ -7,7 +7,7 @@ import { PromoSection } from './components/PromoSection'
 import { ProvidersStrip } from './components/ProvidersStrip'
 import { PlayHubProvider, usePlayHub } from './context/PlayHubContext'
 import { API_HINT, isProductionApiMisconfigured } from './api/playhub'
-import { isRoletaRoute, useHashRoute } from './hooks/useHashRoute'
+import { isRoletaRoute, parseRoletaGameSlug, useHashRoute } from './hooks/useHashRoute'
 import { RoletaPage } from './pages/RoletaPage'
 import './App.css'
 
@@ -75,10 +75,11 @@ function App() {
   const hash = useHashRoute()
 
   if (isRoletaRoute(hash)) {
+    const gameSlug = parseRoletaGameSlug(hash)
     return (
       <div className="app-shell">
         <Header />
-        <RoletaPage />
+        <RoletaPage gameSlug={gameSlug} key={gameSlug} />
         <Footer />
       </div>
     )

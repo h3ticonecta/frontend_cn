@@ -1,4 +1,5 @@
 import type { Game } from '../types/playhub'
+import { roletaHashForGame } from '../hooks/useHashRoute'
 import './GameCard.css'
 
 const BADGE_LABEL: Record<NonNullable<Game['badge']>, string> = {
@@ -13,20 +14,21 @@ type Props = {
 
 export function GameCard({ game }: Props) {
   const [from, to] = game.gradient
+  const playable = game.play?.kind === 'roleta'
 
   const openGame = () => {
-    if (game.play?.kind === 'roleta') {
-      window.location.hash = game.play.client_route || '#/roleta'
-    }
+    if (!game.play || game.play.kind !== 'roleta') return
+    window.location.hash = roletaHashForGame(game.play, game.id)
   }
 
   return (
     <article className="game-card">
       <button
         type="button"
-        className="game-card__hit"
-        aria-label={`Jogar ${game.title}`}
+        className={`game-card__hit${playable ? '' : ' game-card__hit--static'}`}
+        aria-label={playable ? `Jogar ${game.title}` : `${game.title} (em breve)`}
         onClick={openGame}
+        disabled={!playable}
       >
         <div
           className="game-card__thumb"
@@ -42,7 +44,7 @@ export function GameCard({ game }: Props) {
               {BADGE_LABEL[game.badge]}
             </span>
           )}
-          <span className="game-card__play">▶ Jogar</span>
+          <span className="game-card__play">{playable ? '▶ Jogar' : 'Em breve'}</span>
         </div>
         <div className="game-card__meta">
           <h3 className="game-card__title">{game.title}</h3>

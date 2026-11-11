@@ -62,6 +62,12 @@ Edite jogos, promoções e ao vivo no **Django Admin** (`/admin/`); o frontend r
 
 ## Roleta (demo)
 
-- Lobby: card **Roleta Brasil** → `#/roleta`
-- API: contrato em `../backend_cn/docs/contratos/roleta.md`
-- Sessão demo salva em `localStorage` (`playhub_roleta_sessao_id`)
+Contrato: `../backend_cn/docs/contratos/roleta.md`
+
+1. Home: jogo **Roleta Brasil** traz `play.kind === "roleta"` e `play_mesa_slug` (admin/seed).
+2. Clique no card → `#/roleta?game=roleta-brasil`.
+3. Tela: `GET /api/v1/games/roleta-brasil/` (card + `roleta`) e, se faltar histórico, `GET /api/v1/roleta/?mesa=…`.
+4. `POST /api/v1/roleta/sessoes/` · `POST /api/v1/roleta/girar/`.
+5. Sessão demo em `localStorage` (`playhub_roleta_sessao_id`).
+
+Demais cards: `play: null` — botão “Em breve”.

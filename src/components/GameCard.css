@@ -12,6 +12,16 @@
   font-family: inherit;
 }
 
+.game-card__hit--static:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.game-card__hit--static:hover .game-card__thumb {
+  transform: none;
+  box-shadow: none;
+}
+
 .game-card__thumb {
   position: relative;
   aspect-ratio: 4 / 5;
