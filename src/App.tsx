@@ -2,7 +2,6 @@ import { Footer } from './components/Footer'
 import { GameGrid } from './components/GameGrid'
 import { Header } from './components/Header'
 import { HeroBanner } from './components/HeroBanner'
-import { LiveStrip } from './components/LiveStrip'
 import { PromoSection } from './components/PromoSection'
 import { ProvidersStrip } from './components/ProvidersStrip'
 import { PlayHubProvider, usePlayHub } from './context/PlayHubContext'
@@ -66,13 +65,7 @@ function PlayHubPage() {
       <Header />
       <main>
         <HeroBanner hero={data.hero} />
-        <LiveStrip sessions={data.live} />
-        <GameGrid
-          games={data.games}
-          categories={data.categories}
-          popularIds={data.popular_ids}
-          newIds={data.new_ids}
-        />
+        <GameGrid games={data.games} />
         <PromoSection promotions={data.promotions} />
         <ProvidersStrip providers={data.providers} />
       </main>

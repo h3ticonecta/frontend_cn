@@ -1,44 +1,22 @@
 import { useMemo, useState } from 'react'
-import type { CategoryTab, Game, GameCategory } from '../types/playhub'
-import { CategoryTabs } from './CategoryTabs'
+import type { Game } from '../types/playhub'
 import { GameCard } from './GameCard'
 import './GameGrid.css'
 
 type Props = {
   games: Game[]
-  categories: CategoryTab[]
-  popularIds: string[]
-  newIds: string[]
 }
 
-export function GameGrid({ games, categories, popularIds, newIds }: Props) {
-  const [category, setCategory] = useState<GameCategory>(
-    popularIds.length > 0 ? 'populares' : 'todos',
-  )
+export function GameGrid({ games }: Props) {
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
-    let list = games
-
-    if (category === 'populares') {
-      list = list.filter((g) => popularIds.includes(g.id))
-    } else if (category === 'novos') {
-      list = list.filter((g) => newIds.includes(g.id) || g.badge === 'novo')
-    } else if (category !== 'todos') {
-      list = list.filter((g) => g.category === category)
-    }
-
     const q = query.trim().toLowerCase()
-    if (q) {
-      list = list.filter(
-        (g) =>
-          g.title.toLowerCase().includes(q) ||
-          g.provider.toLowerCase().includes(q),
-      )
-    }
-
-    return list
-  }, [category, query, games, popularIds, newIds])
+    if (!q) return games
+    return games.filter(
+      (g) => g.title.toLowerCase().includes(q) || g.provider.toLowerCase().includes(q),
+    )
+  }, [query, games])
 
   return (
     <section className="games-section" id="jogos" aria-labelledby="games-heading">
@@ -62,12 +40,6 @@ export function GameGrid({ games, categories, popularIds, newIds }: Props) {
         </label>
       </div>
 
-      <CategoryTabs
-        categories={categories}
-        active={category}
-        onChange={setCategory}
-      />
-
       <div className="game-grid" role="list">
         {filtered.map((game) => (
           <div key={game.id} role="listitem">
@@ -80,7 +52,7 @@ export function GameGrid({ games, categories, popularIds, newIds }: Props) {
         <p className="games-empty">
           {games.length === 0
             ? 'Nenhum jogo na API. No backend, rode python manage.py seed_playhub (e seed_roleta).'
-            : 'Nenhum jogo encontrado. Tente outra categoria ou busca.'}
+            : 'Nenhum jogo encontrado. Tente outra busca.'}
         </p>
       )}
     </section>
