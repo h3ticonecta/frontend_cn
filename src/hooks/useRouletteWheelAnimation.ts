@@ -55,7 +55,7 @@ export function useRouletteWheelAnimation() {
     const tick = (now: number) => {
       const dt = Math.min((now - last) / 1000, 0.05)
       last = now
-      velWheelRef.current *= 1.002
+      velWheelRef.current = Math.max(velWheelRef.current * 1.002, 80)
       velBallRef.current *= 1.0015
       const w = wheelRef.current + velWheelRef.current * dt
       const b = ballRef.current + velBallRef.current * dt
@@ -69,12 +69,16 @@ export function useRouletteWheelAnimation() {
     stopRaf()
 
     const settleBallAngle = -92
-    const targetWheel = wheelRotationToLand(wheelRef.current, numero, settleBallAngle, 4)
+    let targetWheel = wheelRotationToLand(wheelRef.current, numero, settleBallAngle, 4)
+    while (targetWheel <= wheelRef.current) {
+      targetWheel += 360
+    }
     const targetBall = ballRotationToLand(ballRef.current, targetWheel, numero, 7)
 
-    let velW = velWheelRef.current || 220
+    let velW = Math.max(velWheelRef.current || 220, 60)
     let velB = velBallRef.current || -300
 
+    const startWheel = wheelRef.current
     const t0 = performance.now()
 
     await new Promise<void>((resolve) => {
@@ -89,24 +93,40 @@ export function useRouletteWheelAnimation() {
         const dt = 1 / 60
 
         const friction = 0.97 - p * 0.04
-        velW *= friction
+        velW = Math.max(velW * friction, 0)
         velB *= friction
 
         const coupling = p > 0.45 ? Math.min(1, (p - 0.45) / 0.55) : 0
         const pocketAngle =
           pocketCenterAngle(indexOfPocket(numero)) + wheelRef.current
         const slip = ballRef.current - pocketAngle
-        velB += coupling * (-velW * 0.45 - velB * 0.15 - slip * 0.02) * dt * 60
+        velB += coupling * (-velW * 0.45 - velB * 0.12 - slip * 0.02) * dt * 60
 
-        let w = wheelRef.current + velW * dt
+        let w = wheelRef.current
+        const remaining = targetWheel - w
+        if (remaining > 0.5) {
+          const steer = p > 0.65 ? Math.min(1, (p - 0.65) / 0.35) : 0
+          const cruise = velW * dt
+          const guided = remaining * steer * 0.08
+          w += Math.max(cruise, guided, 0.15)
+          w = Math.min(w, targetWheel)
+        } else {
+          w = targetWheel
+          velW = 0
+        }
+
+        w = Math.max(w, startWheel)
         let b = ballRef.current + velB * dt
 
-        const steer = p > 0.72 ? ((p - 0.72) / 0.28) ** 2 : 0
-        w += (targetWheel - w) * steer * 0.14
-        b += (targetBall - b) * steer * 0.12
+        const ballSteer = p > 0.78 ? ((p - 0.78) / 0.22) ** 2 : 0
+        const ballGap = targetBall - b
+        if (ballGap > 0) {
+          b += ballGap * ballSteer * 0.1
+        } else {
+          b = targetBall
+        }
 
         const ballR = 1.04 - p * 0.06
-
         applyFrame(w, b, ballR)
 
         if (p >= 1) {
