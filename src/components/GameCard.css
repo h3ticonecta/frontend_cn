@@ -1,0 +1,117 @@
+.game-card {
+  min-width: 0;
+}
+
+.game-card__hit {
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+
+.game-card__thumb {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+
+.game-card__hit:hover .game-card__thumb {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+}
+
+.game-card__icon {
+  font-size: 3rem;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+  transition: transform 0.25s;
+}
+
+.game-card__hit:hover .game-card__icon {
+  transform: scale(1.08);
+}
+
+.game-card__badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+
+.game-card__badge--hot {
+  background: #ef4444;
+  color: #fff;
+}
+
+.game-card__badge--novo {
+  background: #10b981;
+  color: #fff;
+}
+
+.game-card__badge--jackpot {
+  background: linear-gradient(90deg, #f5d76e, #d4af37);
+  color: #1a1408;
+}
+
+.game-card__play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(8, 12, 22, 0.65);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.game-card__hit:hover .game-card__play {
+  opacity: 1;
+}
+
+.game-card__meta {
+  padding: 0.65rem 0.15rem 0;
+}
+
+.game-card__title {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.game-card__provider {
+  margin: 0.15rem 0 0;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.game-card__rtp {
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #94a3b8;
+  background: rgba(148, 163, 184, 0.12);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+}

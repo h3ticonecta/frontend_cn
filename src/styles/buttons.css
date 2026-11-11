@@ -1,0 +1,54 @@
+.btn {
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.55rem 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    background 0.2s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: #e2e8f0;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.btn--ghost:hover {
+  border-color: #d4af37;
+  color: #f5d76e;
+}
+
+.btn--gold {
+  background: linear-gradient(180deg, #f5d76e 0%, #c9a227 100%);
+  color: #1a1408;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
+}
+
+.btn--gold:hover {
+  box-shadow: 0 6px 28px rgba(212, 175, 55, 0.5);
+}
+
+.btn--lg {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.btn--outline {
+  background: transparent;
+  color: #e2e8f0;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+}
+
+.btn--outline:hover {
+  background: rgba(212, 175, 55, 0.08);
+  color: #f5d76e;
+}
