@@ -22,6 +22,7 @@ import {
 } from '../lib/roletaValidate'
 import type { ApostaPayload, RoletaConfig, RoletaGiroResult } from '../types/roleta'
 import '../styles/buttons.css'
+import '../styles/roleta-studio.css'
 import './RoletaPage.css'
 
 type PendingBet = ApostaPayload & { key: string }
@@ -282,6 +283,22 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
         </p>
       )}
 
+      <section className="roleta-studio__stage" aria-label="Mesa da roleta">
+        <p className="roleta-studio__stage-label">Mesa ao vivo · demo</p>
+        <RoletaWheelVisual
+          vermelhos={vermelhos}
+          wheelRotation={wheelAnim.wheelDeg}
+          ballRotation={wheelAnim.ballDeg}
+          ballRadiusFactor={wheelAnim.ballRadiusFactor}
+          isAnimating={wheelAnim.isAnimating || spinning}
+          highlightNumber={
+            !wheelAnim.isAnimating && !spinning
+              ? (ultimoGiro?.resultado.numero ?? numeroStraight)
+              : null
+          }
+        />
+      </section>
+
       <div className="roleta-page__grid">
         <section className="roleta-panel" aria-labelledby="roleta-result-heading">
           <h2 id="roleta-result-heading" className="roleta-panel__title">
@@ -342,7 +359,10 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
           </ul>
         </section>
 
-        <section className="roleta-panel" aria-labelledby="roleta-bets-heading">
+        <section
+          className="roleta-panel roleta-panel--bets"
+          aria-labelledby="roleta-bets-heading"
+        >
           <h2 id="roleta-bets-heading" className="roleta-panel__title">
             Apostas
           </h2>
@@ -365,33 +385,15 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
             />
           </label>
 
-          <div className="roleta-bets-layout">
-            <div className="roleta-bets-layout__wheel">
-              <RoletaWheelVisual
-                vermelhos={vermelhos}
-                wheelRotation={wheelAnim.wheelDeg}
-                ballRotation={wheelAnim.ballDeg}
-                ballRadiusFactor={wheelAnim.ballRadiusFactor}
-                isAnimating={wheelAnim.isAnimating || spinning}
-                highlightNumber={
-                  !wheelAnim.isAnimating && !spinning
-                    ? (ultimoGiro?.resultado.numero ?? numeroStraight)
-                    : null
-                }
-              />
-            </div>
-            <div className="roleta-bets-layout__table">
-              <RoletaTable
-                vermelhos={vermelhos}
-                selectedStraight={numeroStraight}
-                onStraight={addStraightFromTable}
-              />
-              <p className="roleta-hint">
-                Toque em um número para apostar <strong>straight</strong> (35:1). O{' '}
-                <strong>0</strong> faz perder apostas externas.
-              </p>
-            </div>
-          </div>
+          <RoletaTable
+            vermelhos={vermelhos}
+            selectedStraight={numeroStraight}
+            onStraight={addStraightFromTable}
+          />
+          <p className="roleta-hint">
+            Toque em um número para apostar <strong>straight</strong> (35:1). O{' '}
+            <strong>0</strong> faz perder apostas externas.
+          </p>
 
           <div className="roleta-quick">
             {OUTSIDE_BETS.map((b) => (
