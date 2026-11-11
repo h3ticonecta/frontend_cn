@@ -19,8 +19,9 @@ function waitMs(ms: number, signal?: AbortSignal): Promise<void> {
   })
 }
 
-const SPIN_MS = 3200
-const SETTLE_BALL_ANGLE = -92
+const SPIN_MS = 5000
+const SETTLE_BALL_WORLD = -90
+const EXTRA_TURNS = 2
 
 export function useRouletteWheelAnimation() {
   const [wheelDeg, setWheelDeg] = useState(0)
@@ -66,6 +67,7 @@ export function useRouletteWheelAnimation() {
           let b = fromB + (targetBall - fromB) * e
 
           if (w < wheelRef.current) w = wheelRef.current
+          if (b < ballRef.current) b = ballRef.current
           const ballR = 1.04 - p * 0.05
 
           applyFrame(w, b, ballR)
@@ -97,10 +99,15 @@ export function useRouletteWheelAnimation() {
       stopRaf()
 
       const fromW = wheelRef.current
-      let targetWheel = wheelRotationToLand(fromW, numero, SETTLE_BALL_ANGLE, 1)
+      let targetWheel = wheelRotationToLand(fromW, numero, SETTLE_BALL_WORLD, EXTRA_TURNS)
       if (targetWheel <= fromW) targetWheel = fromW + 360
 
-      const targetBall = ballRotationToLand(ballRef.current, targetWheel, numero, 1)
+      const targetBall = ballRotationToLand(
+        ballRef.current,
+        targetWheel,
+        numero,
+        EXTRA_TURNS,
+      )
 
       await animateSingleSpin(targetWheel, targetBall, signal)
       if (signal?.aborted) return

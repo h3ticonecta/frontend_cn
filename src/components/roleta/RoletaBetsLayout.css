@@ -13,7 +13,7 @@
   }
 
   .roleta-bets-layout__wheel {
-    flex: 0 0 min(42%, 300px);
+    flex: 0 0 min(48%, 360px);
     position: sticky;
     top: 5.5rem;
   }

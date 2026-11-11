@@ -6,8 +6,19 @@ export const EUROPEAN_WHEEL_ORDER: readonly number[] = [
 
 export const WHEEL_SLOT_ANGLE = 360 / EUROPEAN_WHEEL_ORDER.length
 
+/** Com ballRotation=0 a bolinha fica no topo (12h) = ângulo mundial -90°. */
+export const BALL_ANGLE_OFFSET = -90
+
 export function pocketCenterAngle(index: number): number {
   return -90 + index * WHEEL_SLOT_ANGLE + WHEEL_SLOT_ANGLE / 2
+}
+
+export function ballWorldAngle(ballRotation: number): number {
+  return ballRotation + BALL_ANGLE_OFFSET
+}
+
+export function normalizeDeg(deg: number): number {
+  return ((deg % 360) + 360) % 360
 }
 
 export function indexOfPocket(numero: number): number {
@@ -25,25 +36,25 @@ export function wheelRotationToLand(
   const idx = indexOfPocket(numero)
   const pocketLocal = pocketCenterAngle(idx)
   const targetWheelMod = ballWorldAngle - pocketLocal
-  const currentMod = ((currentWheel % 360) + 360) % 360
-  let delta = targetWheelMod - currentMod
-  while (delta <= 0) delta += 360
+  const currentMod = normalizeDeg(currentWheel)
+  let delta = normalizeDeg(targetWheelMod) - currentMod
+  if (delta <= 0) delta += 360
   return currentWheel + delta + extraTurns * 360
 }
 
-/** Bolinha acompanha o bolso vencedor no trilho (ângulo mundial alinhado). */
+/** Rotação da bolinha para o centro do bolso vencedor alinhado ao trilho (topo). */
 export function ballRotationToLand(
   currentBall: number,
   targetWheel: number,
   numero: number,
-  extraTurns = 9,
+  extraTurns = 1,
 ): number {
   const idx = indexOfPocket(numero)
-  const align = pocketCenterAngle(idx) + targetWheel
-  const currentMod = ((currentBall % 360) + 360) % 360
-  const targetMod = ((align % 360) + 360) % 360
-  let delta = targetMod - currentMod
-  while (delta <= 0) delta += 360
+  const pocketWorld = normalizeDeg(pocketCenterAngle(idx) + targetWheel)
+  const targetBallMod = normalizeDeg(pocketWorld - BALL_ANGLE_OFFSET)
+  const currentMod = normalizeDeg(currentBall)
+  let delta = targetBallMod - currentMod
+  if (delta <= 0) delta += 360
   return currentBall + delta + extraTurns * 360
 }
 
