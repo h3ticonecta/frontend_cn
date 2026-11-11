@@ -26,10 +26,6 @@
   will-change: transform;
 }
 
-.roleta-wheel__deflector {
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.5));
-}
-
 .roleta-wheel__ball {
   fill: url(#ballGrad);
   stroke: #52525b;

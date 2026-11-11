@@ -200,7 +200,7 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
         sessaoId,
         pendentes.map(({ tipo, valor, numero }) => ({ tipo, valor, numero })),
       )
-      await wheelAnim.ensureMinDuration(startedAt, 2200, signal)
+      await wheelAnim.ensureMinDuration(startedAt, 1800, signal)
       await wheelAnim.finishSpin(result.resultado.numero, signal)
       setUltimoGiro(result)
       setSaldo(result.sessao.saldo_depois)
@@ -371,6 +371,7 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
                 vermelhos={vermelhos}
                 wheelRotation={wheelAnim.wheelDeg}
                 ballRotation={wheelAnim.ballDeg}
+                ballRadiusFactor={wheelAnim.ballRadiusFactor}
                 isAnimating={wheelAnim.isAnimating || spinning}
                 highlightNumber={
                   !wheelAnim.isAnimating && !spinning

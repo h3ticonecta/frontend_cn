@@ -10,6 +10,7 @@ type Props = {
   vermelhos: number[]
   wheelRotation: number
   ballRotation: number
+  ballRadiusFactor?: number
   isAnimating: boolean
   highlightNumber?: number | null
 }
@@ -19,8 +20,8 @@ const CY = 200
 const R_OUT = 188
 const R_IN = 138
 const R_LABEL = 162
-/** Raio do trilho da bolinha (entre bolsos e aro de madeira). */
-const R_BALL_TRACK = (R_OUT + R_IN) / 2
+/** Trilho sobre os números (perto do anel externo dos bolsos). */
+const R_BALL_TRACK = R_OUT - 10
 
 function polarToCartesian(cx: number, cy: number, r: number, deg: number) {
   const rad = (deg * Math.PI) / 180
@@ -52,9 +53,11 @@ export function RoletaWheelVisual({
   vermelhos,
   wheelRotation,
   ballRotation,
+  ballRadiusFactor = 1,
   isAnimating,
   highlightNumber,
 }: Props) {
+  const ballTrack = R_BALL_TRACK * ballRadiusFactor
   const segments = useMemo(() => {
     return EUROPEAN_WHEEL_ORDER.map((num, i) => {
       const start = -90 + i * WHEEL_SLOT_ANGLE
@@ -142,18 +145,8 @@ export function RoletaWheelVisual({
             </g>
           </g>
           <g transform={`translate(${CX} ${CY}) rotate(${ballRotation})`}>
-            <circle
-              className="roleta-wheel__ball"
-              cx={0}
-              cy={-R_BALL_TRACK}
-              r={7}
-            />
+            <circle className="roleta-wheel__ball" cx={0} cy={-ballTrack} r={6.5} />
           </g>
-          <path
-            d="M 195 18 L 205 18 L 200 42 Z"
-            className="roleta-wheel__deflector"
-            fill="url(#goldGrad)"
-          />
         </svg>
       </div>
       <p className="roleta-wheel__caption">Roleta europeia</p>

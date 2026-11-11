@@ -15,21 +15,36 @@ export function indexOfPocket(numero: number): number {
   return idx >= 0 ? idx : 0
 }
 
-/** Graus acumulados da roda para alinhar o número ao defletor (topo). */
-export function wheelRotationToLand(currentWheel: number, numero: number, extraTurns = 6): number {
+/** Rotação final da roda: o bolso vencedor para na posição da bolinha (ângulo dado). */
+export function wheelRotationToLand(
+  currentWheel: number,
+  numero: number,
+  ballWorldAngle: number,
+  extraTurns = 5,
+): number {
   const idx = indexOfPocket(numero)
-  const center = pocketCenterAngle(idx)
-  const targetMod = -90 - center
+  const pocketLocal = pocketCenterAngle(idx)
+  const targetWheelMod = ballWorldAngle - pocketLocal
   const currentMod = ((currentWheel % 360) + 360) % 360
-  let delta = targetMod - currentMod
+  let delta = targetWheelMod - currentMod
   while (delta <= 0) delta += 360
   return currentWheel + delta + extraTurns * 360
 }
 
-/** Bolinha no trilho — sentido oposto à roda. */
-export function ballRotationToSettle(currentBall: number, extraTurns = 7): number {
+/** Bolinha acompanha o bolso vencedor no trilho (ângulo mundial alinhado). */
+export function ballRotationToLand(
+  currentBall: number,
+  targetWheel: number,
+  numero: number,
+  extraTurns = 9,
+): number {
+  const idx = indexOfPocket(numero)
+  const align = pocketCenterAngle(idx) + targetWheel
   const currentMod = ((currentBall % 360) + 360) % 360
-  return currentBall + (360 - currentMod) + extraTurns * 360
+  const targetMod = ((align % 360) + 360) % 360
+  let delta = targetMod - currentMod
+  while (delta <= 0) delta += 360
+  return currentBall + delta + extraTurns * 360
 }
 
 export function pocketFill(
