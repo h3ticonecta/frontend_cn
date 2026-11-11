@@ -44,9 +44,9 @@ function wedgePath(startDeg: number, endDeg: number) {
 }
 
 const FILL: Record<string, string> = {
-  green: '#0d7a4c',
-  red: '#c41e1e',
-  black: '#141414',
+  green: '#008445',
+  red: '#d61c22',
+  black: '#1a1a1a',
 }
 
 export function RoletaWheelVisual({

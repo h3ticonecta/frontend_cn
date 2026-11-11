@@ -14,6 +14,7 @@ dist-ssr
 
 # Editor directories and files
 .cursor/mcp.json
+.stitch/
 .vscode/*
 !.vscode/extensions.json
 .idea

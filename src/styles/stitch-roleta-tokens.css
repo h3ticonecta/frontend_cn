@@ -1,0 +1,66 @@
+/**
+ * Design system — tela Roleta (Stitch / PlayHub)
+ * Sincronize tokens via MCP Stitch quando disponível (docs/STITCH_MCP.md).
+ */
+.roleta-page {
+  --stitch-bg: #0b121f;
+  --stitch-bg-deep: #060d18;
+  --stitch-surface: #0f172a;
+  --stitch-surface-glass: rgba(15, 23, 42, 0.72);
+  --stitch-border: rgba(148, 163, 184, 0.15);
+  --stitch-border-strong: rgba(148, 163, 184, 0.35);
+  --stitch-border-gold: rgba(250, 204, 21, 0.35);
+
+  --stitch-text: #f8fafc;
+  --stitch-text-secondary: #e2e8f0;
+  --stitch-text-muted: #94a3b8;
+  --stitch-text-faint: #64748b;
+
+  --stitch-gold: #d4af37;
+  --stitch-gold-soft: #f5d76e;
+  --stitch-gold-start: #facc15;
+  --stitch-gold-end: #eab308;
+  --stitch-gold-glow: rgba(250, 204, 21, 0.45);
+
+  --stitch-red: #d61c22;
+  --stitch-red-deep: #b91c1c;
+  --stitch-green: #008445;
+  --stitch-green-deep: #15803d;
+  --stitch-black: #1a1a1a;
+  --stitch-black-ui: #1e293b;
+
+  --stitch-radius-sm: 8px;
+  --stitch-radius-md: 12px;
+  --stitch-radius-lg: 16px;
+  --stitch-radius-xl: 20px;
+  --stitch-radius-pill: 999px;
+
+  --stitch-space-2xs: 0.25rem;
+  --stitch-space-xs: 0.35rem;
+  --stitch-space-sm: 0.5rem;
+  --stitch-space-md: 0.75rem;
+  --stitch-space-lg: 1rem;
+  --stitch-space-xl: 1.25rem;
+  --stitch-space-2xl: 1.5rem;
+  --stitch-space-3xl: 2rem;
+  --stitch-page-pad-x: 1.25rem;
+  --stitch-page-pad-y: 2rem;
+  --stitch-panel-pad: 1.5rem;
+  --stitch-grid-gap: 0.35rem;
+  --stitch-actions-gap: 0.65rem;
+
+  --stitch-font-caption: 0.75rem;
+  --stitch-font-body: 0.875rem;
+  --stitch-font-body-lg: 0.95rem;
+  --stitch-font-title: 1.125rem;
+  --stitch-font-display: clamp(1.75rem, 4vw, 2.25rem);
+  --stitch-weight-semibold: 600;
+  --stitch-weight-bold: 700;
+  --stitch-weight-extrabold: 800;
+  --stitch-letter-label: 0.08em;
+  --stitch-letter-stage: 0.14em;
+
+  --stitch-shadow-panel: 0 24px 48px rgba(0, 0, 0, 0.45);
+  --stitch-shadow-gold: 0 4px 24px var(--stitch-gold-glow);
+  --stitch-shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}

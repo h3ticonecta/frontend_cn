@@ -13,16 +13,31 @@
 
 > **Segurança:** nunca commite chaves de API no Git. Se uma chave vazou no chat, gere outra no Google Cloud.
 
-## Design tokens (estúdio Roleta)
+## Design system (Roleta)
 
-O layout da página `#/roleta` segue tokens inspirados em UI de casino premium (feltro, dourado, vidro):
+Tokens extraídos do layout Stitch (paleta navy + dourado + mesa europeia):
 
 | Token | Valor |
 |-------|--------|
-| felt | `#0a2920` |
-| felt-light | `#134e3a` |
-| gold | `#d4af37` |
-| gold-soft | `#f5d76e` |
-| glass | `rgba(15, 23, 42, 0.72)` |
+| background | `#0b121f` |
+| surface | `#0f172a` |
+| gold (CTA) | `#facc15` → `#eab308` |
+| red | `#d61c22` |
+| green | `#008445` |
+| text muted | `#94a3b8` |
 
-Arquivo: `src/styles/roleta-studio.css`
+Arquivos:
+
+- `src/styles/stitch-roleta-tokens.css` — variáveis `--stitch-*`
+- `src/styles/roleta-studio.css` — aplicação na página
+- `src/pages/RoletaPage.css` — layout Apostas (roda + grade + ações)
+
+### Sincronizar com o MCP
+
+1. **Settings → MCP** — servidor `stitch` conectado (`.cursor/mcp.json`).
+2. `list_projects` → `list_screens` → `get_screen` na tela **Roleta**.
+3. Baixe o HTML: `bash scripts/fetch-stitch.sh "<htmlCode.downloadUrl>" ".stitch/designs/roleta.html"`.
+4. Extraia `<script id="tailwind-config">` e compare com `stitch-roleta-tokens.css`.
+5. Peça ao agente para atualizar tokens/layout se houver diff.
+
+Pasta local sugerida: `.stitch/designs/` (não commitar exports grandes).

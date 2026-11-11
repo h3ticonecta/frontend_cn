@@ -1,43 +1,9 @@
-/* Tokens — alinhados a UI tipo Stitch / casino live */
+@import './stitch-roleta-tokens.css';
+
 .roleta-page {
-  --roleta-felt: #0a2920;
-  --roleta-felt-edge: #134e3a;
-  --roleta-felt-glow: rgba(16, 185, 129, 0.12);
-  --roleta-gold: #d4af37;
-  --roleta-gold-soft: #f5d76e;
-  --roleta-glass: rgba(8, 18, 28, 0.78);
-  --roleta-glass-border: rgba(212, 175, 55, 0.22);
-  background:
-    radial-gradient(ellipse 90% 55% at 50% 0%, var(--roleta-felt-glow), transparent),
-    radial-gradient(ellipse 120% 80% at 50% 100%, rgba(0, 0, 0, 0.35), transparent),
-    linear-gradient(180deg, #060d18 0%, var(--roleta-felt) 45%, #050a12 100%);
-}
-
-.roleta-studio__stage {
-  margin-bottom: 1.5rem;
-  padding: 1.25rem 1rem 1.5rem;
-  border-radius: 20px;
-  border: 1px solid var(--roleta-glass-border);
-  background:
-    radial-gradient(ellipse 70% 55% at 50% 40%, var(--roleta-felt-edge), var(--roleta-felt)),
-    var(--roleta-glass);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 24px 48px rgba(0, 0, 0, 0.45);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-}
-
-@media (min-width: 720px) {
-  .roleta-studio__stage {
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    padding: 1.5rem 1.75rem;
-  }
+  background: var(--stitch-bg);
+  color: var(--stitch-text-secondary);
+  font-size: var(--stitch-font-body-lg);
 }
 
 .roleta-studio__wheel-col {
@@ -45,72 +11,132 @@
   flex: 0 0 auto;
 }
 
-.roleta-studio__actions {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  width: min(100%, 240px);
-  flex-shrink: 0;
-}
-
-.roleta-studio__spin {
-  width: 100%;
-}
-
-.roleta-studio__action {
-  width: 100%;
-  text-align: center;
-}
-
 .roleta-studio__stage-label {
-  margin: 0 0 0.75rem;
+  margin: 0 0 var(--stitch-space-md);
   font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+  font-weight: var(--stitch-weight-bold);
+  letter-spacing: var(--stitch-letter-stage);
   text-transform: uppercase;
-  color: var(--roleta-gold-soft);
+  color: var(--stitch-gold-soft);
 }
 
-.roleta-studio__stage .roleta-wheel__frame {
-  width: min(100%, 360px);
+.roleta-bets-layout__wheel .roleta-wheel__frame {
+  width: min(100%, 280px);
   margin: 0 auto;
 }
 
+.roleta-studio__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stitch-actions-gap);
+  width: min(100%, 240px);
+  margin: var(--stitch-space-lg) auto 0;
+}
+
+.roleta-studio__spin,
+.roleta-studio__action {
+  width: 100%;
+  text-align: center;
+  border-radius: var(--stitch-radius-sm);
+}
+
+.roleta-page .btn--gold.btn--lg {
+  background: linear-gradient(180deg, var(--stitch-gold-start) 0%, var(--stitch-gold-end) 100%);
+  color: #1a1408;
+  font-weight: var(--stitch-weight-bold);
+  box-shadow: var(--stitch-shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.roleta-page .btn--ghost {
+  background: transparent;
+  color: var(--stitch-text-secondary);
+  border: 1px solid var(--stitch-border-strong);
+}
+
+.roleta-page .btn--ghost:hover {
+  border-color: var(--stitch-gold);
+  color: var(--stitch-gold-soft);
+}
+
+.roleta-page a.btn--ghost.roleta-studio__action {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .roleta-page__head {
-  border-bottom: 1px solid rgba(212, 175, 55, 0.12);
-  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(250, 204, 21, 0.12);
+  padding-bottom: var(--stitch-space-xl);
+  margin-bottom: var(--stitch-space-2xl);
+}
+
+.roleta-page__eyebrow {
+  color: var(--stitch-gold);
+  letter-spacing: var(--stitch-letter-label);
+}
+
+.roleta-page__title {
+  color: var(--stitch-text);
+}
+
+.roleta-page__sub {
+  color: var(--stitch-text-muted);
 }
 
 .roleta-panel {
-  background: var(--roleta-glass);
-  border: 1px solid var(--roleta-glass-border);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  background: var(--stitch-surface-glass);
+  border: 1px solid var(--stitch-border);
+  box-shadow: var(--stitch-shadow-inset);
+  border-radius: var(--stitch-radius-lg);
+  padding: var(--stitch-panel-pad);
 }
 
 .roleta-panel--bets {
-  border-color: rgba(16, 185, 129, 0.25);
+  border-color: rgba(0, 132, 69, 0.22);
 }
 
 .roleta-page__saldo {
-  background: linear-gradient(145deg, rgba(212, 175, 55, 0.14), rgba(8, 18, 28, 0.6));
-  border-color: var(--roleta-gold);
-  box-shadow: 0 0 24px rgba(212, 175, 55, 0.12);
+  background: linear-gradient(
+    145deg,
+    rgba(250, 204, 21, 0.12),
+    rgba(15, 23, 42, 0.65)
+  );
+  border-color: var(--stitch-gold);
+  border-radius: var(--stitch-radius-md);
+  box-shadow: 0 0 24px rgba(250, 204, 21, 0.1);
+}
+
+.roleta-page__saldo-valor {
+  color: var(--stitch-gold-soft);
 }
 
 .roleta-quick__btn {
-  background: rgba(8, 28, 22, 0.85);
-  border-color: rgba(212, 175, 55, 0.25);
+  background: var(--stitch-surface);
+  border-color: var(--stitch-border-strong);
+  border-radius: var(--stitch-radius-pill);
+  font-size: var(--stitch-font-body);
 }
 
-.roleta-studio__spin {
-  box-shadow:
-    0 4px 24px rgba(212, 175, 55, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+.roleta-quick__btn--red {
+  border-color: rgba(214, 28, 34, 0.55);
+  color: #fecaca;
+}
+
+.roleta-quick__btn:hover {
+  border-color: var(--stitch-gold);
+}
+
+.roleta-wheel__caption {
+  margin-top: var(--stitch-space-sm);
+  font-size: var(--stitch-font-caption);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--stitch-text-faint);
 }
 
 @media (min-width: 900px) {
   .roleta-page__grid {
-    grid-template-columns: 0.95fr 1.15fr;
+    grid-template-columns: 0.92fr 1.18fr;
     align-items: start;
+    gap: var(--stitch-space-xl);
   }
 }

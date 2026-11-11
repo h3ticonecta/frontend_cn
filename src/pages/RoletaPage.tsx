@@ -283,44 +283,6 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
         </p>
       )}
 
-      <section className="roleta-studio__stage" aria-label="Mesa da roleta">
-        <div className="roleta-studio__wheel-col">
-          <p className="roleta-studio__stage-label">Mesa ao vivo · demo</p>
-          <RoletaWheelVisual
-            vermelhos={vermelhos}
-            wheelRotation={wheelAnim.wheelDeg}
-            ballRotation={wheelAnim.ballDeg}
-            ballRadiusFactor={wheelAnim.ballRadiusFactor}
-            isAnimating={wheelAnim.isAnimating || spinning}
-            highlightNumber={
-              !wheelAnim.isAnimating && !spinning
-                ? (ultimoGiro?.resultado.numero ?? numeroStraight)
-                : null
-            }
-          />
-        </div>
-        <div className="roleta-studio__actions" aria-label="Ações da mesa">
-          <button
-            type="button"
-            className="btn btn--gold btn--lg roleta-studio__spin"
-            disabled={spinning || pendentes.length === 0}
-            onClick={girar}
-          >
-            {spinning ? 'Girando…' : 'Girar roleta'}
-          </button>
-          <a href="#/" className="btn btn--ghost roleta-studio__action">
-            Voltar ao lobby
-          </a>
-          <button
-            type="button"
-            className="btn btn--ghost roleta-studio__action"
-            onClick={novaSessao}
-          >
-            Nova sessão (reset fichas)
-          </button>
-        </div>
-      </section>
-
       <div className="roleta-page__grid">
         <section className="roleta-panel" aria-labelledby="roleta-result-heading">
           <h2 id="roleta-result-heading" className="roleta-panel__title">
@@ -389,29 +351,71 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
             Apostas
           </h2>
 
-          <label className="roleta-field">
-            <span>Valor por aposta (fichas)</span>
-            <input
-              type="number"
-              min={Number(mesa?.aposta_minima)}
-              max={Number(mesa?.aposta_maxima)}
-              step="0.01"
-              value={valorAposta}
-              onChange={(e) => setValorAposta(e.target.value)}
-              onBlur={() => {
-                if (mesa) {
-                  const v = valorApostaValido(valorAposta, mesa)
-                  if (v.ok) setValorAposta(v.valor)
-                }
-              }}
-            />
+          <label className="roleta-field roleta-field--chip">
+            <span className="roleta-field__label">Valor por aposta (fichas)</span>
+            <span className="roleta-field__control">
+              <span className="roleta-field__chip" aria-hidden="true" />
+              <input
+                type="number"
+                min={Number(mesa?.aposta_minima)}
+                max={Number(mesa?.aposta_maxima)}
+                step="0.01"
+                value={valorAposta}
+                onChange={(e) => setValorAposta(e.target.value)}
+                onBlur={() => {
+                  if (mesa) {
+                    const v = valorApostaValido(valorAposta, mesa)
+                    if (v.ok) setValorAposta(v.valor)
+                  }
+                }}
+              />
+            </span>
           </label>
 
-          <RoletaTable
-            vermelhos={vermelhos}
-            selectedStraight={numeroStraight}
-            onStraight={addStraightFromTable}
-          />
+          <div className="roleta-bets-layout" aria-label="Mesa e grade de apostas">
+            <div className="roleta-bets-layout__wheel">
+              <RoletaWheelVisual
+                vermelhos={vermelhos}
+                wheelRotation={wheelAnim.wheelDeg}
+                ballRotation={wheelAnim.ballDeg}
+                ballRadiusFactor={wheelAnim.ballRadiusFactor}
+                isAnimating={wheelAnim.isAnimating || spinning}
+                highlightNumber={
+                  !wheelAnim.isAnimating && !spinning
+                    ? (ultimoGiro?.resultado.numero ?? numeroStraight)
+                    : null
+                }
+              />
+              <div className="roleta-studio__actions" aria-label="Ações da mesa">
+                <button
+                  type="button"
+                  className="btn btn--gold btn--lg roleta-studio__spin"
+                  disabled={spinning || pendentes.length === 0}
+                  onClick={girar}
+                >
+                  {spinning ? 'Girando…' : 'Girar roleta'}
+                </button>
+                <a href="#/" className="btn btn--ghost roleta-studio__action">
+                  Voltar ao lobby
+                </a>
+                <button
+                  type="button"
+                  className="btn btn--ghost roleta-studio__action"
+                  onClick={novaSessao}
+                >
+                  Nova sessão (reset fichas)
+                </button>
+              </div>
+            </div>
+            <div className="roleta-bets-layout__table">
+              <RoletaTable
+                vermelhos={vermelhos}
+                selectedStraight={numeroStraight}
+                onStraight={addStraightFromTable}
+              />
+            </div>
+          </div>
+
           <p className="roleta-hint">
             Toque em um número para apostar <strong>straight</strong> (35:1). O{' '}
             <strong>0</strong> faz perder apostas externas.
