@@ -1,0 +1,123 @@
+.wg-reels {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.wg-reels__frame {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.35rem;
+  padding: 0.85rem;
+  border-radius: 1rem;
+  border: 3px solid #d4a017;
+  background: linear-gradient(180deg, #2a1810 0%, #1a0f0a 40%, #120a07 100%);
+  box-shadow:
+    0 0 40px rgba(212, 160, 23, 0.25),
+    inset 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+.wg-reels--bonus .wg-reels__frame {
+  box-shadow:
+    0 0 50px rgba(147, 197, 253, 0.35),
+    inset 0 0 20px rgba(59, 130, 246, 0.15);
+}
+
+.wg-reel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-height: 11rem;
+}
+
+.wg-reel--blur .wg-cell {
+  filter: blur(2px) brightness(0.85);
+  animation: wg-reel-scroll 0.12s linear infinite;
+}
+
+.wg-reel--giant {
+  transform: scale(1.02);
+  border-radius: 0.5rem;
+  outline: 1px solid rgba(250, 204, 21, 0.45);
+}
+
+@keyframes wg-reel-scroll {
+  0% {
+    transform: translateY(-2px);
+  }
+  100% {
+    transform: translateY(2px);
+  }
+}
+
+.wg-cell {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 0.45rem;
+  background: linear-gradient(160deg, #fef3c7 0%, #fde68a 35%, #d97706 100%);
+  border: 1px solid rgba(146, 64, 14, 0.35);
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.2);
+  min-height: 3.25rem;
+  position: relative;
+}
+
+.wg-cell--wild,
+.wg-cell--wolf {
+  background: linear-gradient(160deg, #fef08a, #f59e0b, #b45309);
+}
+
+.wg-cell--scatter {
+  background: linear-gradient(160deg, #e0f2fe, #7dd3fc, #0369a1);
+}
+
+.wg-cell--money {
+  background: linear-gradient(160deg, #fffbeb, #fcd34d, #ca8a04);
+}
+
+.wg-cell--glow {
+  animation: wg-win-pulse 0.9s ease-in-out infinite;
+}
+
+@keyframes wg-win-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(250, 204, 21, 0.8);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(251, 191, 36, 1);
+  }
+}
+
+.wg-cell__glyph {
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  line-height: 1;
+  font-weight: 800;
+}
+
+.wg-cell--a .wg-cell__glyph,
+.wg-cell--k .wg-cell__glyph,
+.wg-cell--q .wg-cell__glyph,
+.wg-cell--j .wg-cell__glyph {
+  font-family: Georgia, serif;
+  color: #451a03;
+}
+
+.wg-cell__money-val {
+  position: absolute;
+  bottom: 0.15rem;
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: #78350f;
+}
+
+.wg-reels__win-banner {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  font-weight: 800;
+  color: #fcd34d;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.75rem;
+}

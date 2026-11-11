@@ -11,6 +11,10 @@
   background: #08060d;
 }
 
+.app-shell--wolf-gold {
+  background: #0c1222;
+}
+
 .app-shell main {
   flex: 1;
 }

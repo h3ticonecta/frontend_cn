@@ -56,7 +56,23 @@ export function parseFortuneGemsGameSlug(hash: string): string {
 }
 
 export function fortuneGemsHashForGame(play: { client_route: string }, gameId: string): string {
-  const base = play.client_route || '#/fortune-gems'
+  return slotHashForGame(play, gameId)
+}
+
+export function isWolfGoldRoute(hash: string): boolean {
+  const path = hash.split('?')[0] ?? ''
+  return path === '#/wolf-gold' || path.startsWith('#/wolf-gold/')
+}
+
+export function parseWolfGoldGameSlug(hash: string): string {
+  const raw = hash.replace(/^#/, '')
+  const [, query] = raw.split('?')
+  const params = new URLSearchParams(query ?? '')
+  return params.get('game')?.trim() || 'wolf-gold'
+}
+
+export function slotHashForGame(play: { client_route: string }, gameId: string): string {
+  const base = play.client_route || '#/slots'
   const [path, existingQuery] = base.split('?')
   const params = new URLSearchParams(existingQuery ?? '')
   params.set('game', gameId)

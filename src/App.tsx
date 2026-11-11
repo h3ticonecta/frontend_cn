@@ -10,12 +10,15 @@ import { API_HINT, isProductionApiMisconfigured } from './api/playhub'
 import {
   isFortuneGemsRoute,
   isRoletaRoute,
+  isWolfGoldRoute,
   parseFortuneGemsGameSlug,
   parseRoletaGameSlug,
+  parseWolfGoldGameSlug,
   useHashRoute,
 } from './hooks/useHashRoute'
 import { FortuneGemsPage } from './pages/FortuneGemsPage'
 import { RoletaPage } from './pages/RoletaPage'
+import { WolfGoldPage } from './pages/WolfGoldPage'
 import './App.css'
 
 function PlayHubPage() {
@@ -80,6 +83,17 @@ function PlayHubPage() {
 
 function App() {
   const hash = useHashRoute()
+
+  if (isWolfGoldRoute(hash)) {
+    const gameSlug = parseWolfGoldGameSlug(hash)
+    return (
+      <div className="app-shell app-shell--wolf-gold">
+        <Header />
+        <WolfGoldPage gameSlug={gameSlug} key={gameSlug} />
+        <Footer />
+      </div>
+    )
+  }
 
   if (isFortuneGemsRoute(hash)) {
     const gameSlug = parseFortuneGemsGameSlug(hash)

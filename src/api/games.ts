@@ -1,4 +1,5 @@
 import type { FortuneGemsConfig, FortuneGemsGameDetail } from '../types/fortuneGems'
+import type { WolfGoldConfig, WolfGoldGameDetail } from '../types/wolfGold'
 import type { RoletaConfig, RoletaGameDetail } from '../types/roleta'
 import { apiUrl } from './playhub'
 
@@ -39,6 +40,21 @@ export async function fetchFortuneGemsGameDetail(
 }
 
 export function normalizeFortuneGemsConfig(partial: FortuneGemsConfig): FortuneGemsConfig {
+  return {
+    ...partial,
+    historico_recente: partial.historico_recente ?? [],
+  }
+}
+
+export async function fetchWolfGoldGameDetail(
+  gameSlug: string,
+  signal?: AbortSignal,
+): Promise<WolfGoldGameDetail> {
+  const res = await fetch(apiUrl(`/api/v1/games/${encodeURIComponent(gameSlug)}/`), { signal })
+  return parseJson(res)
+}
+
+export function normalizeWolfGoldConfig(partial: WolfGoldConfig): WolfGoldConfig {
   return {
     ...partial,
     historico_recente: partial.historico_recente ?? [],
