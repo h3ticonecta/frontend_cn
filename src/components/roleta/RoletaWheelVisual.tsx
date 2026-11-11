@@ -19,6 +19,8 @@ const CY = 200
 const R_OUT = 188
 const R_IN = 138
 const R_LABEL = 162
+/** Raio do trilho da bolinha (entre bolsos e aro de madeira). */
+const R_BALL_TRACK = (R_OUT + R_IN) / 2
 
 function polarToCartesian(cx: number, cy: number, r: number, deg: number) {
   const rad = (deg * Math.PI) / 180
@@ -81,6 +83,11 @@ export function RoletaWheelVisual({
               <stop offset="50%" stopColor="#c9a227" />
               <stop offset="100%" stopColor="#8b6914" />
             </linearGradient>
+            <radialGradient id="ballGrad" cx="35%" cy="30%" r="65%">
+              <stop offset="0%" stopColor="#ffffff" />
+              <stop offset="45%" stopColor="#e4e4e7" />
+              <stop offset="100%" stopColor="#71717a" />
+            </radialGradient>
           </defs>
           <circle cx={CX} cy={CY} r={198} fill="url(#goldGrad)" />
           <circle cx={CX} cy={CY} r={192} fill="url(#woodGrad)" />
@@ -134,18 +141,20 @@ export function RoletaWheelVisual({
               <circle r={16} fill="url(#goldGrad)" />
             </g>
           </g>
+          <g transform={`translate(${CX} ${CY}) rotate(${ballRotation})`}>
+            <circle
+              className="roleta-wheel__ball"
+              cx={0}
+              cy={-R_BALL_TRACK}
+              r={7}
+            />
+          </g>
           <path
             d="M 195 18 L 205 18 L 200 42 Z"
             className="roleta-wheel__deflector"
             fill="url(#goldGrad)"
           />
         </svg>
-        <div
-          className="roleta-wheel__ball"
-          style={{
-            transform: `rotate(${ballRotation}deg) translateY(-${R_OUT - 22}px)`,
-          }}
-        />
       </div>
       <p className="roleta-wheel__caption">Roleta europeia</p>
     </div>
