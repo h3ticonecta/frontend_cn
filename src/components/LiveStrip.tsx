@@ -1,12 +1,13 @@
+import type { LiveItem } from '../types/playhub'
 import './LiveStrip.css'
 
-const LIVE = [
-  { name: 'Mega Roleta', viewers: 1240, dealer: 'Ana' },
-  { name: 'Blackjack Party', viewers: 890, dealer: 'Carlos' },
-  { name: 'Bac Bo Live', viewers: 654, dealer: 'Julia' },
-]
+type Props = {
+  sessions: LiveItem[]
+}
 
-export function LiveStrip() {
+export function LiveStrip({ sessions }: Props) {
+  if (sessions.length === 0) return null
+
   return (
     <section className="live-strip" id="ao-vivo" aria-labelledby="live-heading">
       <div className="live-strip__inner">
@@ -14,7 +15,7 @@ export function LiveStrip() {
           <span className="live-dot" aria-hidden /> Ao vivo agora
         </h2>
         <div className="live-strip__scroll">
-          {LIVE.map((item) => (
+          {sessions.map((item) => (
             <button key={item.name} type="button" className="live-pill">
               <span className="live-pill__name">{item.name}</span>
               <span className="live-pill__meta">

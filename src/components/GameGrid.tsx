@@ -1,25 +1,27 @@
 import { useMemo, useState } from 'react'
-import {
-  GAMES,
-  NEW_IDS,
-  POPULAR_IDS,
-  type GameCategory,
-} from '../data/games'
+import type { CategoryTab, Game, GameCategory } from '../types/playhub'
 import { CategoryTabs } from './CategoryTabs'
 import { GameCard } from './GameCard'
 import './GameGrid.css'
 
-export function GameGrid() {
+type Props = {
+  games: Game[]
+  categories: CategoryTab[]
+  popularIds: string[]
+  newIds: string[]
+}
+
+export function GameGrid({ games, categories, popularIds, newIds }: Props) {
   const [category, setCategory] = useState<GameCategory>('populares')
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
-    let list = GAMES
+    let list = games
 
     if (category === 'populares') {
-      list = list.filter((g) => POPULAR_IDS.includes(g.id))
+      list = list.filter((g) => popularIds.includes(g.id))
     } else if (category === 'novos') {
-      list = list.filter((g) => NEW_IDS.includes(g.id) || g.badge === 'novo')
+      list = list.filter((g) => newIds.includes(g.id) || g.badge === 'novo')
     } else if (category !== 'todos') {
       list = list.filter((g) => g.category === category)
     }
@@ -34,7 +36,7 @@ export function GameGrid() {
     }
 
     return list
-  }, [category, query])
+  }, [category, query, games, popularIds, newIds])
 
   return (
     <section className="games-section" id="jogos" aria-labelledby="games-heading">
@@ -58,7 +60,11 @@ export function GameGrid() {
         </label>
       </div>
 
-      <CategoryTabs active={category} onChange={setCategory} />
+      <CategoryTabs
+        categories={categories}
+        active={category}
+        onChange={setCategory}
+      />
 
       <div className="game-grid" role="list">
         {filtered.map((game) => (

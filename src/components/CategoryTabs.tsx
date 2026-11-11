@@ -1,20 +1,20 @@
-import type { GameCategory } from '../data/games'
-import { CATEGORIES } from '../data/games'
+import type { CategoryTab, GameCategory } from '../types/playhub'
 import './CategoryTabs.css'
 
 type Props = {
+  categories: CategoryTab[]
   active: GameCategory
   onChange: (id: GameCategory) => void
 }
 
-export function CategoryTabs({ active, onChange }: Props) {
+export function CategoryTabs({ categories, active, onChange }: Props) {
   return (
     <div
       className="category-tabs"
       role="tablist"
       aria-label="Categorias de jogos"
     >
-      {CATEGORIES.map((cat) => (
+      {categories.map((cat) => (
         <button
           key={cat.id}
           type="button"

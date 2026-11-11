@@ -1,4 +1,4 @@
-import type { Game } from '../data/games'
+import type { Game } from '../types/playhub'
 import './GameCard.css'
 
 const BADGE_LABEL: Record<NonNullable<Game['badge']>, string> = {
