@@ -15,16 +15,24 @@
 
 ## Design system (Roleta)
 
-Tokens extraídos do layout Stitch (paleta navy + dourado + mesa europeia):
+Projeto Stitch: **Roleta Europeia Animada** (`1356737128262033879`), tela **Roleta Europeia VIP - Salon Privé**.
+
+Design system **Monte Carlo Grand Royale** (sincronizado via MCP):
 
 | Token | Valor |
 |-------|--------|
-| background | `#0b121f` |
-| surface | `#0f172a` |
-| gold (CTA) | `#facc15` → `#eab308` |
-| red | `#d61c22` |
-| green | `#008445` |
-| text muted | `#94a3b8` |
+| background / surface | `#1b110e` |
+| primary | `#f2ca50` |
+| primary-container | `#d4af37` |
+| on-surface | `#f3ded8` |
+| felt (mesa) | `#0b3020` |
+| roulette red | `#c92a2a` |
+| roulette green | `#15803d` |
+| roulette black | `#1e1e1e` |
+
+Tipografia: **Playfair Display** (títulos) + **Plus Jakarta Sans** (UI / grade).
+
+Metadados: `docs/stitch-roleta-sync.json`
 
 Arquivos:
 

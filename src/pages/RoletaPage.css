@@ -156,18 +156,18 @@
 }
 
 .roleta-hist__chip--red {
-  background: var(--stitch-red-deep);
-  color: #fff;
+  background: var(--stitch-error-container);
+  color: var(--stitch-on-error);
 }
 
 .roleta-hist__chip--black {
-  background: var(--stitch-black-ui);
-  color: var(--stitch-text);
+  background: var(--stitch-surface-container-highest);
+  color: var(--stitch-on-surface);
 }
 
 .roleta-hist__chip--green {
-  background: var(--stitch-green);
-  color: #ecfdf5;
+  background: var(--stitch-roulette-green);
+  color: var(--stitch-on-surface);
 }
 
 .roleta-field {
@@ -204,10 +204,10 @@
 .roleta-field input {
   width: 100%;
   padding: 0.6rem 0.75rem 0.6rem 2.35rem;
-  border-radius: var(--stitch-radius-sm);
-  border: 1px solid var(--stitch-border-strong);
-  background: var(--stitch-surface);
-  color: var(--stitch-text);
+  border-radius: var(--stitch-radius-lg);
+  border: 1px solid var(--stitch-outline-variant);
+  background: var(--stitch-surface-container);
+  color: var(--stitch-on-surface);
   font-size: var(--stitch-font-body-lg);
   font-weight: var(--stitch-weight-semibold);
 }

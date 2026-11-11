@@ -1,9 +1,11 @@
 @import './stitch-roleta-tokens.css';
 
 .roleta-page {
-  background: var(--stitch-bg);
-  color: var(--stitch-text-secondary);
-  font-size: var(--stitch-font-body-lg);
+  background: var(--stitch-surface-container-lowest);
+  color: var(--stitch-on-surface);
+  font-family: var(--stitch-font-body-family);
+  font-size: var(--stitch-font-body);
+  line-height: 1.43;
 }
 
 .roleta-studio__wheel-col {
@@ -20,9 +22,63 @@
   color: var(--stitch-gold-soft);
 }
 
+.roleta-wheel-pod {
+  padding: var(--stitch-space-lg);
+  background: var(--stitch-surface-container-low);
+  border-radius: var(--stitch-radius-xl);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  position: relative;
+  overflow: hidden;
+}
+
+.roleta-wheel-pod::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(21, 12, 9, 0.6) 0%,
+    transparent 45%,
+    rgba(21, 12, 9, 0.75) 100%
+  );
+  pointer-events: none;
+}
+
+.roleta-wheel-pod .roleta-wheel {
+  position: relative;
+  z-index: 1;
+}
+
 .roleta-bets-layout__wheel .roleta-wheel__frame {
-  width: min(100%, 280px);
+  width: min(100%, 320px);
   margin: 0 auto;
+}
+
+.roleta-felt-mat {
+  padding: var(--stitch-space-md) var(--stitch-space-lg);
+  background: var(--stitch-felt);
+  border-radius: var(--stitch-radius-xl);
+  box-shadow: var(--stitch-shadow-felt);
+  position: relative;
+  overflow: hidden;
+}
+
+.roleta-felt-mat::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.35) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.22) 100%
+  );
+  pointer-events: none;
+}
+
+.roleta-felt-mat .roleta-table {
+  position: relative;
+  z-index: 1;
 }
 
 .roleta-studio__actions {
@@ -41,10 +97,24 @@
 }
 
 .roleta-page .btn--gold.btn--lg {
-  background: linear-gradient(180deg, var(--stitch-gold-start) 0%, var(--stitch-gold-end) 100%);
-  color: #1a1408;
-  font-weight: var(--stitch-weight-bold);
-  box-shadow: var(--stitch-shadow-gold), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  background: linear-gradient(
+    90deg,
+    var(--stitch-primary-fixed-dim) 0%,
+    var(--stitch-primary) 50%,
+    var(--stitch-primary-container) 100%
+  );
+  color: var(--stitch-on-primary);
+  font-family: var(--stitch-font-display);
+  font-weight: 600;
+  font-size: var(--stitch-font-headline-md);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--stitch-radius-xl);
+  box-shadow: var(--stitch-shadow-gold);
+}
+
+.roleta-page .btn--gold.btn--lg:active {
+  transform: translateY(1px);
 }
 
 .roleta-page .btn--ghost {
@@ -64,18 +134,21 @@
 }
 
 .roleta-page__head {
-  border-bottom: 1px solid rgba(250, 204, 21, 0.12);
-  padding-bottom: var(--stitch-space-xl);
-  margin-bottom: var(--stitch-space-2xl);
+  border-bottom: 1px solid var(--stitch-outline-variant);
+  padding-bottom: var(--stitch-space-lg);
+  margin-bottom: var(--stitch-space-xl);
 }
 
 .roleta-page__eyebrow {
-  color: var(--stitch-gold);
-  letter-spacing: var(--stitch-letter-label);
+  color: var(--stitch-primary-fixed-dim);
+  font-size: var(--stitch-font-label-md);
+  letter-spacing: 0.2em;
 }
 
 .roleta-page__title {
-  color: var(--stitch-text);
+  font-family: var(--stitch-font-display);
+  color: var(--stitch-primary);
+  letter-spacing: 0.02em;
 }
 
 .roleta-page__sub {
@@ -83,42 +156,49 @@
 }
 
 .roleta-panel {
-  background: var(--stitch-surface-glass);
-  border: 1px solid var(--stitch-border);
-  box-shadow: var(--stitch-shadow-inset);
-  border-radius: var(--stitch-radius-lg);
+  background: var(--stitch-surface-container-low);
+  border: 1px solid var(--stitch-outline-variant);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+  border-radius: var(--stitch-radius-xl);
   padding: var(--stitch-panel-pad);
 }
 
 .roleta-panel--bets {
-  border-color: rgba(0, 132, 69, 0.22);
+  border-color: rgba(168, 207, 184, 0.15);
+}
+
+.roleta-panel__title {
+  font-family: var(--stitch-font-display);
+  color: var(--stitch-primary);
+  letter-spacing: 0.01em;
 }
 
 .roleta-page__saldo {
-  background: linear-gradient(
-    145deg,
-    rgba(250, 204, 21, 0.12),
-    rgba(15, 23, 42, 0.65)
-  );
-  border-color: var(--stitch-gold);
-  border-radius: var(--stitch-radius-md);
-  box-shadow: 0 0 24px rgba(250, 204, 21, 0.1);
+  background: var(--stitch-surface-container-low);
+  border: 1px solid var(--stitch-outline-variant);
+  border-radius: var(--stitch-radius-pill);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.35);
 }
 
 .roleta-page__saldo-valor {
-  color: var(--stitch-gold-soft);
+  color: var(--stitch-primary-fixed);
+  font-variant-numeric: tabular-nums;
 }
 
 .roleta-quick__btn {
-  background: var(--stitch-surface);
-  border-color: var(--stitch-border-strong);
-  border-radius: var(--stitch-radius-pill);
-  font-size: var(--stitch-font-body);
+  background: color-mix(in srgb, var(--stitch-surface-container-low) 90%, transparent);
+  border: 1px solid var(--stitch-outline-variant);
+  border-radius: var(--stitch-radius-md);
+  font-size: var(--stitch-font-label-md);
+  font-weight: var(--stitch-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--stitch-primary);
 }
 
 .roleta-quick__btn--red {
-  border-color: rgba(214, 28, 34, 0.55);
-  color: #fecaca;
+  border-color: var(--stitch-error-container);
+  color: var(--stitch-on-surface);
 }
 
 .roleta-quick__btn:hover {
@@ -126,11 +206,30 @@
 }
 
 .roleta-wheel__caption {
-  margin-top: var(--stitch-space-sm);
+  margin-top: var(--stitch-space-md);
+  font-size: var(--stitch-font-label-md);
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--stitch-on-surface-variant);
+}
+
+.roleta-wheel-pod__meta {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: var(--stitch-space-md);
   font-size: var(--stitch-font-caption);
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  color: var(--stitch-text-faint);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stitch-secondary);
+  position: relative;
+  z-index: 1;
+}
+
+.roleta-wheel-pod__meta span:last-child {
+  color: var(--stitch-on-surface-variant);
 }
 
 @media (min-width: 900px) {

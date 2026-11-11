@@ -1,6 +1,6 @@
 .roleta-table {
   display: flex;
-  gap: var(--stitch-grid-gap, 0.35rem);
+  gap: var(--stitch-grid-gap, 0.25rem);
   margin-bottom: 0;
   align-items: stretch;
 }
@@ -9,56 +9,62 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--stitch-grid-gap, 0.35rem);
+  gap: var(--stitch-grid-gap, 0.25rem);
 }
 
 .roleta-table__row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--stitch-grid-gap, 0.35rem);
+  gap: var(--stitch-grid-gap, 0.25rem);
 }
 
 .roleta-table__cell {
-  font-family: inherit;
-  font-size: var(--stitch-font-body, 0.875rem);
-  font-weight: var(--stitch-weight-bold, 700);
-  padding: 0.45rem 0.25rem;
-  border-radius: 6px;
-  border: 1px solid var(--stitch-border, rgba(148, 163, 184, 0.25));
+  font-family: var(--stitch-font-body-family);
+  font-size: var(--stitch-font-number-grid, 1.375rem);
+  font-weight: var(--stitch-weight-extrabold, 800);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  padding: 0.5rem 0.25rem;
+  border-radius: var(--stitch-radius-md, 0.25rem);
+  border: 1px solid rgba(212, 175, 55, 0.22);
   cursor: pointer;
-  color: #fff;
-  min-height: 2rem;
+  color: var(--stitch-on-surface, #f3ded8);
+  min-height: 3.25rem;
   transition:
     transform 0.12s,
-    box-shadow 0.12s;
+    box-shadow 0.12s,
+    filter 0.12s;
 }
 
 .roleta-table__cell:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  filter: brightness(1.08);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.35);
 }
 
 .roleta-table__cell--selected {
-  outline: 2px solid var(--stitch-gold-start, #facc15);
+  outline: 2px solid var(--stitch-primary, #f2ca50);
   outline-offset: 2px;
+  box-shadow: 0 0 14px rgba(242, 202, 80, 0.4);
 }
 
 .roleta-table__cell--zero {
   align-self: stretch;
-  min-width: 2.5rem;
+  min-width: 2.75rem;
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  background: linear-gradient(180deg, var(--stitch-green, #008445), var(--stitch-green-deep, #15803d));
+  border-radius: var(--stitch-radius-lg, 0.5rem) 0 0 var(--stitch-radius-lg, 0.5rem);
+  background: var(--stitch-roulette-green, #15803d);
 }
 
 .roleta-table__cell--red {
-  background: linear-gradient(180deg, var(--stitch-red, #d61c22), var(--stitch-red-deep, #b91c1c));
+  background: var(--stitch-roulette-red, #c92a2a);
 }
 
 .roleta-table__cell--black {
-  background: linear-gradient(180deg, var(--stitch-black-ui, #1e293b), var(--stitch-bg, #0b121f));
+  background: var(--stitch-roulette-black, #1e1e1e);
 }
 
 .roleta-table__cell--green {
-  background: linear-gradient(180deg, var(--stitch-green, #008445), var(--stitch-green-deep, #15803d));
+  background: var(--stitch-roulette-green, #15803d);
 }

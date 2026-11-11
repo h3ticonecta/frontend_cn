@@ -1,66 +1,125 @@
 /**
- * Design system — tela Roleta (Stitch / PlayHub)
- * Sincronize tokens via MCP Stitch quando disponível (docs/STITCH_MCP.md).
+ * Monte Carlo Grand Royale — tokens do Stitch (tailwind-config da tela VIP).
+ * Projeto: Roleta Europeia Animada (1356737128262033879)
  */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
 .roleta-page {
-  --stitch-bg: #0b121f;
-  --stitch-bg-deep: #060d18;
-  --stitch-surface: #0f172a;
-  --stitch-surface-glass: rgba(15, 23, 42, 0.72);
-  --stitch-border: rgba(148, 163, 184, 0.15);
-  --stitch-border-strong: rgba(148, 163, 184, 0.35);
-  --stitch-border-gold: rgba(250, 204, 21, 0.35);
+  /* Surfaces */
+  --stitch-background: #1b110e;
+  --stitch-surface: #1b110e;
+  --stitch-surface-dim: #1b110e;
+  --stitch-surface-bright: #433632;
+  --stitch-surface-container-lowest: #150c09;
+  --stitch-surface-container-low: #241915;
+  --stitch-surface-container: #281d19;
+  --stitch-surface-container-high: #332723;
+  --stitch-surface-container-highest: #3e322e;
+  --stitch-surface-variant: #3e322e;
+  --stitch-surface-glass: rgba(36, 25, 21, 0.92);
 
-  --stitch-text: #f8fafc;
-  --stitch-text-secondary: #e2e8f0;
-  --stitch-text-muted: #94a3b8;
-  --stitch-text-faint: #64748b;
+  /* Content */
+  --stitch-on-background: #f3ded8;
+  --stitch-on-surface: #f3ded8;
+  --stitch-on-surface-variant: #d0c5af;
+  --stitch-outline: #99907c;
+  --stitch-outline-variant: #4d4635;
 
-  --stitch-gold: #d4af37;
-  --stitch-gold-soft: #f5d76e;
-  --stitch-gold-start: #facc15;
-  --stitch-gold-end: #eab308;
-  --stitch-gold-glow: rgba(250, 204, 21, 0.45);
+  /* Brand */
+  --stitch-primary: #f2ca50;
+  --stitch-on-primary: #3c2f00;
+  --stitch-primary-container: #d4af37;
+  --stitch-on-primary-container: #554300;
+  --stitch-primary-fixed: #ffe088;
+  --stitch-primary-fixed-dim: #e9c349;
+  --stitch-inverse-primary: #735c00;
 
-  --stitch-red: #d61c22;
-  --stitch-red-deep: #b91c1c;
-  --stitch-green: #008445;
-  --stitch-green-deep: #15803d;
-  --stitch-black: #1a1a1a;
-  --stitch-black-ui: #1e293b;
+  --stitch-secondary: #a8cfb8;
+  --stitch-secondary-container: #2d503e;
+  --stitch-secondary-fixed-dim: #a8cfb8;
 
-  --stitch-radius-sm: 8px;
-  --stitch-radius-md: 12px;
-  --stitch-radius-lg: 16px;
-  --stitch-radius-xl: 20px;
-  --stitch-radius-pill: 999px;
+  --stitch-error-container: #93000a;
+  --stitch-on-error: #690005;
 
-  --stitch-space-2xs: 0.25rem;
-  --stitch-space-xs: 0.35rem;
+  /* Mesa / funcional (designMd Stitch) */
+  --stitch-felt: #0b3020;
+  --stitch-roulette-red: #c92a2a;
+  --stitch-roulette-black: #1e1e1e;
+  --stitch-roulette-green: #15803d;
+  --stitch-mahogany: #130a07;
+
+  /* Aliases legados (--stitch-*) */
+  --stitch-bg: var(--stitch-background);
+  --stitch-bg-deep: var(--stitch-surface-container-lowest);
+  --stitch-text: var(--stitch-on-surface);
+  --stitch-text-secondary: var(--stitch-on-background);
+  --stitch-text-muted: var(--stitch-on-surface-variant);
+  --stitch-text-faint: var(--stitch-outline);
+  --stitch-gold: var(--stitch-primary-container);
+  --stitch-gold-soft: var(--stitch-primary-fixed);
+  --stitch-gold-start: var(--stitch-primary-fixed-dim);
+  --stitch-gold-end: var(--stitch-primary-container);
+  --stitch-gold-glow: rgba(242, 202, 80, 0.4);
+  --stitch-red: var(--stitch-roulette-red);
+  --stitch-red-deep: #93000a;
+  --stitch-green: var(--stitch-roulette-green);
+  --stitch-green-deep: #166534;
+  --stitch-black: var(--stitch-roulette-black);
+  --stitch-black-ui: var(--stitch-surface-container-highest);
+  --stitch-border: rgba(153, 144, 124, 0.22);
+  --stitch-border-strong: var(--stitch-outline-variant);
+  --stitch-border-gold: rgba(212, 175, 55, 0.35);
+
+  /* Radius (Stitch ROUND_FOUR) */
+  --stitch-radius-sm: 0.125rem;
+  --stitch-radius-md: 0.25rem;
+  --stitch-radius-lg: 0.5rem;
+  --stitch-radius-xl: 0.75rem;
+  --stitch-radius-pill: 9999px;
+
+  /* Spacing */
+  --stitch-space-xs: 0.25rem;
   --stitch-space-sm: 0.5rem;
-  --stitch-space-md: 0.75rem;
-  --stitch-space-lg: 1rem;
-  --stitch-space-xl: 1.25rem;
+  --stitch-space-md: 1rem;
+  --stitch-space-lg: 1.5rem;
+  --stitch-space-xl: 2.5rem;
+  --stitch-space-2xs: 0.25rem;
   --stitch-space-2xl: 1.5rem;
-  --stitch-space-3xl: 2rem;
-  --stitch-page-pad-x: 1.25rem;
-  --stitch-page-pad-y: 2rem;
+  --stitch-space-3xl: 2.5rem;
+  --stitch-page-pad-x: 1rem;
+  --stitch-page-pad-y: 1.5rem;
   --stitch-panel-pad: 1.5rem;
-  --stitch-grid-gap: 0.35rem;
+  --stitch-grid-gap: 0.25rem;
   --stitch-actions-gap: 0.65rem;
+  --stitch-margin-desktop: 2.5rem;
+  --stitch-gutter-desktop: 1.5rem;
 
-  --stitch-font-caption: 0.75rem;
+  /* Type scale */
+  --stitch-font-display: 'Playfair Display', Georgia, serif;
+  --stitch-font-body-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --stitch-font-caption: 0.625rem;
+  --stitch-font-label-md: 0.75rem;
   --stitch-font-body: 0.875rem;
-  --stitch-font-body-lg: 0.95rem;
-  --stitch-font-title: 1.125rem;
-  --stitch-font-display: clamp(1.75rem, 4vw, 2.25rem);
+  --stitch-font-body-lg: 1rem;
+  --stitch-font-title: 1.25rem;
+  --stitch-font-headline-md: 1.5rem;
+  --stitch-font-display-size: clamp(1.625rem, 4vw, 2.25rem);
+  --stitch-font-number-grid: 1.375rem;
   --stitch-weight-semibold: 600;
   --stitch-weight-bold: 700;
   --stitch-weight-extrabold: 800;
   --stitch-letter-label: 0.08em;
-  --stitch-letter-stage: 0.14em;
+  --stitch-letter-stage: 0.1em;
 
-  --stitch-shadow-panel: 0 24px 48px rgba(0, 0, 0, 0.45);
-  --stitch-shadow-gold: 0 4px 24px var(--stitch-gold-glow);
-  --stitch-shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --stitch-shadow-panel: 0 12px 32px rgba(0, 0, 0, 0.7);
+  --stitch-shadow-gold: 0 4px 20px var(--stitch-gold-glow);
+  --stitch-shadow-inset: inset 0 4px 24px rgba(0, 0, 0, 0.45);
+  --stitch-shadow-felt: inset 0 4px 24px rgba(0, 0, 0, 0.8), 0 12px 32px rgba(0, 0, 0, 0.7);
+}
+
+@media (min-width: 1024px) {
+  .roleta-page {
+    --stitch-page-pad-x: var(--stitch-margin-desktop);
+    --stitch-page-pad-y: var(--stitch-gutter-desktop);
+  }
 }

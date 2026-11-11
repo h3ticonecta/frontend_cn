@@ -374,18 +374,24 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
 
           <div className="roleta-bets-layout" aria-label="Mesa e grade de apostas">
             <div className="roleta-bets-layout__wheel">
-              <RoletaWheelVisual
-                vermelhos={vermelhos}
-                wheelRotation={wheelAnim.wheelDeg}
-                ballRotation={wheelAnim.ballDeg}
-                ballRadiusFactor={wheelAnim.ballRadiusFactor}
-                isAnimating={wheelAnim.isAnimating || spinning}
-                highlightNumber={
-                  !wheelAnim.isAnimating && !spinning
-                    ? (ultimoGiro?.resultado.numero ?? numeroStraight)
-                    : null
-                }
-              />
+              <div className="roleta-wheel-pod">
+                <RoletaWheelVisual
+                  vermelhos={vermelhos}
+                  wheelRotation={wheelAnim.wheelDeg}
+                  ballRotation={wheelAnim.ballDeg}
+                  ballRadiusFactor={wheelAnim.ballRadiusFactor}
+                  isAnimating={wheelAnim.isAnimating || spinning}
+                  highlightNumber={
+                    !wheelAnim.isAnimating && !spinning
+                      ? (ultimoGiro?.resultado.numero ?? numeroStraight)
+                      : null
+                  }
+                />
+                <div className="roleta-wheel-pod__meta" aria-hidden="true">
+                  <span>Mesa demo · ao vivo</span>
+                  <span>Single zero · 37 bolsos</span>
+                </div>
+              </div>
               <div className="roleta-studio__actions" aria-label="Ações da mesa">
                 <button
                   type="button"
@@ -408,11 +414,13 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
               </div>
             </div>
             <div className="roleta-bets-layout__table">
-              <RoletaTable
-                vermelhos={vermelhos}
-                selectedStraight={numeroStraight}
-                onStraight={addStraightFromTable}
-              />
+              <div className="roleta-felt-mat">
+                <RoletaTable
+                  vermelhos={vermelhos}
+                  selectedStraight={numeroStraight}
+                  onStraight={addStraightFromTable}
+                />
+              </div>
             </div>
           </div>
 
