@@ -5,31 +5,38 @@
   align-items: stretch;
 }
 
+.roleta-table--horizontal {
+  flex-direction: row;
+  width: 100%;
+  min-width: min(100%, 36rem);
+}
+
 .roleta-table__nums {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: var(--stitch-grid-gap, 0.25rem);
+  min-width: 0;
 }
 
 .roleta-table__row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(12, minmax(1.65rem, 1fr));
   gap: var(--stitch-grid-gap, 0.25rem);
 }
 
 .roleta-table__cell {
   font-family: var(--stitch-font-body-family);
-  font-size: var(--stitch-font-number-grid, 1.375rem);
+  font-size: clamp(0.75rem, 1.6vw, 1.125rem);
   font-weight: var(--stitch-weight-extrabold, 800);
   line-height: 1.15;
   letter-spacing: -0.01em;
-  padding: 0.5rem 0.25rem;
+  padding: 0.45rem 0.15rem;
   border-radius: var(--stitch-radius-md, 0.25rem);
   border: 1px solid rgba(212, 175, 55, 0.22);
   cursor: pointer;
   color: var(--stitch-on-surface, #f3ded8);
-  min-height: 3.25rem;
+  min-height: 2.35rem;
   transition:
     transform 0.12s,
     box-shadow 0.12s,
@@ -49,12 +56,15 @@
 }
 
 .roleta-table__cell--zero {
+  flex: 0 0 clamp(2.25rem, 5vw, 3rem);
   align-self: stretch;
-  min-width: 2.75rem;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  min-height: auto;
   border-radius: var(--stitch-radius-lg, 0.5rem) 0 0 var(--stitch-radius-lg, 0.5rem);
   background: var(--stitch-roulette-green, #15803d);
+  font-size: clamp(1rem, 2.2vw, 1.35rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .roleta-table__cell--red {

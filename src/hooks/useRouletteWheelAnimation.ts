@@ -3,6 +3,10 @@ import {
   ballRotationToLand,
   wheelRotationToLand,
 } from '../lib/rouletteWheel'
+import {
+  startRouletteSpinSound,
+  stopRouletteSpinSound,
+} from '../lib/rouletteSpinSound'
 
 function easeOutQuart(t: number): number {
   return 1 - (1 - t) ** 4
@@ -91,6 +95,7 @@ export function useRouletteWheelAnimation() {
     setIsAnimating(true)
     setBallRadiusFactor(1.02)
     stopRaf()
+    startRouletteSpinSound()
     return abortRef.current.signal
   }, [])
 
@@ -111,6 +116,7 @@ export function useRouletteWheelAnimation() {
 
       await animateSingleSpin(targetWheel, targetBall, signal)
       if (signal?.aborted) return
+      stopRouletteSpinSound()
       setIsAnimating(false)
       setBallRadiusFactor(1)
     },
@@ -120,6 +126,7 @@ export function useRouletteWheelAnimation() {
   const cancelSpin = useCallback(() => {
     abortRef.current?.abort()
     stopRaf()
+    stopRouletteSpinSound()
     setIsAnimating(false)
     setBallRadiusFactor(1)
   }, [])

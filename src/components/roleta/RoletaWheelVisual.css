@@ -7,7 +7,7 @@
 
 .roleta-wheel__frame {
   position: relative;
-  width: min(100%, clamp(280px, 42vw, 440px));
+  width: min(100%, clamp(320px, 52vw, 520px));
   aspect-ratio: 1;
   overflow: hidden;
 }

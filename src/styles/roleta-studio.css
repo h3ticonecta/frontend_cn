@@ -50,12 +50,8 @@
 }
 
 .roleta-bets-layout__wheel .roleta-wheel__frame {
-  width: min(100%, clamp(300px, 46vw, 460px));
+  width: min(100%, clamp(340px, 54vw, 540px));
   margin: 0 auto;
-}
-
-.roleta-bets-layout__wheel {
-  flex: 0 0 min(48%, 340px);
 }
 
 .roleta-felt-mat {
