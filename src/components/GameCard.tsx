@@ -11,8 +11,17 @@ type Props = {
   game: Game
 }
 
+const PLAYABLE_ON_HUB = new Set(['roleta-brasil'])
+
 export function GameCard({ game }: Props) {
   const [from, to] = game.gradient
+
+  const openGame = () => {
+    if (PLAYABLE_ON_HUB.has(game.id)) {
+      window.location.hash = '#/roleta'
+      return
+    }
+  }
 
   return (
     <article className="game-card">
@@ -20,6 +29,7 @@ export function GameCard({ game }: Props) {
         type="button"
         className="game-card__hit"
         aria-label={`Jogar ${game.title}`}
+        onClick={openGame}
       >
         <div
           className="game-card__thumb"

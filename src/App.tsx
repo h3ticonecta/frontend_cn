@@ -7,6 +7,8 @@ import { PromoSection } from './components/PromoSection'
 import { ProvidersStrip } from './components/ProvidersStrip'
 import { PlayHubProvider, usePlayHub } from './context/PlayHubContext'
 import { API_HINT } from './api/playhub'
+import { isRoletaRoute, useHashRoute } from './hooks/useHashRoute'
+import { RoletaPage } from './pages/RoletaPage'
 import './App.css'
 
 function PlayHubPage() {
@@ -66,6 +68,18 @@ function PlayHubPage() {
 }
 
 function App() {
+  const hash = useHashRoute()
+
+  if (isRoletaRoute(hash)) {
+    return (
+      <div className="app-shell">
+        <Header />
+        <RoletaPage />
+        <Footer />
+      </div>
+    )
+  }
+
   return (
     <PlayHubProvider>
       <PlayHubPage />

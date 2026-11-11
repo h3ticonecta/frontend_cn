@@ -32,3 +32,9 @@ Em desenvolvimento o Vite faz **proxy** de `/api` → `http://127.0.0.1:8000` (m
 Em produção, copie `.env.production.example` para `.env.production` e aponte `VITE_API_URL` para o host real da API.
 
 Edite jogos, promoções e ao vivo no **Django Admin** (`/admin/`); o frontend reflete na próxima carga.
+
+## Roleta (demo)
+
+- Lobby: card **Roleta Brasil** → `#/roleta`
+- API: contrato em `../backend_cn/docs/contratos/roleta.md`
+- Sessão demo salva em `localStorage` (`playhub_roleta_sessao_id`)

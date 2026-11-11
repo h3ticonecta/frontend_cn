@@ -18,7 +18,7 @@ export const API_BASE = resolveApiBase()
 export const API_HINT =
   API_BASE || 'mesma origem (proxy Vite → http://127.0.0.1:8000)'
 
-function apiUrl(path: string): string {
+export function apiUrl(path: string): string {
   const p = path.startsWith('/') ? path : `/${path}`
   return API_BASE ? `${API_BASE}${p}` : p
 }
