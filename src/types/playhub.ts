@@ -9,6 +9,20 @@ export type GameCategory =
 
 export type GameBadge = 'novo' | 'hot' | 'jackpot' | null
 
+export interface GamePlayMeta {
+  kind: 'roleta'
+  mesa_slug: string
+  client_route: string
+  contrato: string
+  api: {
+    config: string
+    sessoes: string
+    sessao_detail: string
+    girar: string
+    card: string
+  }
+}
+
 export interface Game {
   id: string
   title: string
@@ -18,6 +32,7 @@ export interface Game {
   rtp?: string
   gradient: [string, string]
   icon: string
+  play: GamePlayMeta | null
 }
 
 export interface CategoryTab {
