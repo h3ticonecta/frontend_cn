@@ -8,14 +8,17 @@ import { API_HINT, isProductionApiMisconfigured } from './api/playhub'
 import {
   isFortuneGemsRoute,
   isRoletaRoute,
+  isSweetBonanzaRoute,
   isWolfGoldRoute,
   parseFortuneGemsGameSlug,
   parseRoletaGameSlug,
+  parseSweetBonanzaGameSlug,
   parseWolfGoldGameSlug,
   useHashRoute,
 } from './hooks/useHashRoute'
 import { FortuneGemsPage } from './pages/FortuneGemsPage'
 import { RoletaPage } from './pages/RoletaPage'
+import { SweetBonanzaPage } from './pages/SweetBonanzaPage'
 import { WolfGoldPage } from './pages/WolfGoldPage'
 import './App.css'
 
@@ -74,6 +77,17 @@ function PlayHubPage() {
 
 function App() {
   const hash = useHashRoute()
+
+  if (isSweetBonanzaRoute(hash)) {
+    const gameSlug = parseSweetBonanzaGameSlug(hash)
+    return (
+      <div className="app-shell app-shell--sweet-bonanza">
+        <Header />
+        <SweetBonanzaPage gameSlug={gameSlug} key={gameSlug} />
+        <Footer />
+      </div>
+    )
+  }
 
   if (isWolfGoldRoute(hash)) {
     const gameSlug = parseWolfGoldGameSlug(hash)

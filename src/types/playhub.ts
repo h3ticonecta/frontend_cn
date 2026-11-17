@@ -30,7 +30,11 @@ export interface GamePlayMetaRoleta {
 export interface GamePlayMetaSlot {
   kind: 'slot'
   slot_slug: string
+  /** Slug do card na grade (ex.: sweet-bonanza). */
+  card_slug?: string
   client_route: string
+  contrato?: string
+  chances_contrato?: string
   api: {
     config: string
     sessoes: string

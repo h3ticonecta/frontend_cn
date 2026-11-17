@@ -71,6 +71,18 @@ export function parseWolfGoldGameSlug(hash: string): string {
   return params.get('game')?.trim() || 'wolf-gold'
 }
 
+export function isSweetBonanzaRoute(hash: string): boolean {
+  const path = hash.split('?')[0] ?? ''
+  return path === '#/sweet-bonanza' || path.startsWith('#/sweet-bonanza/')
+}
+
+export function parseSweetBonanzaGameSlug(hash: string): string {
+  const raw = hash.replace(/^#/, '')
+  const [, query] = raw.split('?')
+  const params = new URLSearchParams(query ?? '')
+  return params.get('game')?.trim() || 'sweet-bonanza'
+}
+
 export function slotHashForGame(play: { client_route: string }, gameId: string): string {
   const base = play.client_route || '#/slots'
   const [path, existingQuery] = base.split('?')

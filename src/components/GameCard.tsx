@@ -14,7 +14,8 @@ type Props = {
 
 export function GameCard({ game }: Props) {
   const [from, to] = game.gradient
-  const isSlotFallback = game.id === 'fortune-gems' || game.id === 'wolf-gold'
+  const isSlotFallback =
+    game.id === 'fortune-gems' || game.id === 'wolf-gold' || game.id === 'sweet-bonanza'
   const playable = game.play?.kind === 'roleta' || game.play?.kind === 'slot' || isSlotFallback
 
   const openGame = () => {
@@ -28,6 +29,7 @@ export function GameCard({ game }: Props) {
     }
     if (game.id === 'fortune-gems') window.location.hash = fortuneGemsHash(game.id)
     if (game.id === 'wolf-gold') window.location.hash = '#/wolf-gold?game=wolf-gold'
+    if (game.id === 'sweet-bonanza') window.location.hash = '#/sweet-bonanza?game=sweet-bonanza'
   }
 
   return (

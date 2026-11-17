@@ -1,0 +1,154 @@
+.cc-page {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 2rem;
+  color: #fff;
+}
+
+.cc-page__title {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.cc-page__sub {
+  opacity: 0.85;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.cc-panel {
+  background: linear-gradient(145deg, #831843, #be185d 50%, #7c3aed);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.cc-hud {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.cc-hud__label {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.85;
+}
+
+.cc-hud__value {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.cc-hud__select {
+  width: 100%;
+  margin-top: 0.15rem;
+  border-radius: 0.5rem;
+  border: none;
+  padding: 0.35rem;
+}
+
+.cc-page__eyebrow {
+  margin: 0;
+  font-size: 0.7rem;
+  opacity: 0.85;
+}
+
+.cc-fs-banner {
+  margin: 0 0 0.75rem;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.5rem;
+  background: rgba(59, 130, 246, 0.35);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.cc-cascade-log {
+  margin: 0.75rem 0;
+  padding-left: 1.2rem;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  opacity: 0.95;
+}
+
+.cc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.cc-buy-fs {
+  flex: 1;
+  min-width: 9rem;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  padding: 0.85rem 0.75rem;
+  font-weight: 700;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.cc-buy-fs:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cc-spin {
+  flex: 2;
+  min-width: 9rem;
+}
+
+.cc-hud__value--sm {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.cc-rules {
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.75rem;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.cc-check {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0.75rem 0;
+  font-size: 0.9rem;
+}
+
+.cc-spin {
+  width: 100%;
+  border: none;
+  border-radius: 999px;
+  padding: 0.85rem 1rem;
+  font-weight: 700;
+  background: #fbbf24;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.cc-spin:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cc-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.cc-footer__back {
+  color: #fcd34d;
+}
+
+.cc-page__status,
+.cc-page__erro {
+  text-align: center;
+  padding: 2rem 1rem;
+}

@@ -1,0 +1,82 @@
+.cc-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.35rem;
+  padding: 0.65rem;
+  border-radius: 0.75rem;
+  background: rgba(15, 23, 42, 0.35);
+  border: 2px solid rgba(251, 191, 36, 0.35);
+  min-height: 14rem;
+}
+
+.cc-grid--spin .cc-grid__cell {
+  animation: cc-cell-jiggle 0.15s ease-in-out infinite alternate;
+}
+
+@keyframes cc-cell-jiggle {
+  from {
+    transform: translateY(-1px);
+  }
+  to {
+    transform: translateY(2px);
+  }
+}
+
+.cc-grid__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.cc-grid__cell {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 0.45rem;
+  background: linear-gradient(145deg, #fdf2f8, #f9a8d4 45%, #db2777);
+  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.cc-grid__cell--empty {
+  opacity: 0.35;
+  background: rgba(30, 27, 75, 0.5);
+}
+
+.cc-grid__cell--scatter {
+  background: linear-gradient(145deg, #e0f2fe, #38bdf8, #1d4ed8);
+}
+
+.cc-grid__cell--bomb {
+  background: linear-gradient(145deg, #fef3c7, #f59e0b, #b45309);
+}
+
+.cc-grid__cell--win {
+  outline: 2px solid #fef08a;
+  outline-offset: -2px;
+  animation: cc-win-pop 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes cc-win-pop {
+  from {
+    box-shadow: 0 0 8px rgba(254, 240, 138, 0.5);
+  }
+  to {
+    box-shadow: 0 0 16px rgba(253, 224, 71, 0.95);
+  }
+}
+
+.cc-grid__emoji {
+  font-size: clamp(1rem, 3.2vw, 1.65rem);
+  line-height: 1;
+}
+
+.cc-grid__mult {
+  position: absolute;
+  bottom: 0.1rem;
+  right: 0.15rem;
+  font-size: 0.55rem;
+  font-weight: 900;
+  color: #78350f;
+}

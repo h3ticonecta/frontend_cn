@@ -1,5 +1,6 @@
 import { withDefaultChances } from '../lib/chances'
 import type { FortuneGemsConfig, FortuneGemsGameDetail } from '../types/fortuneGems'
+import type { CandyCascadeConfig, CandyCascadeGameDetail } from '../types/candyCascade'
 import type { WolfGoldConfig, WolfGoldGameDetail } from '../types/wolfGold'
 import type { RoletaConfig, RoletaGameDetail } from '../types/roleta'
 import { apiUrl } from './playhub'
@@ -61,6 +62,25 @@ export async function fetchWolfGoldGameDetail(
 ): Promise<WolfGoldGameDetail> {
   const res = await fetch(apiUrl(`/api/v1/games/${encodeURIComponent(gameSlug)}/`), { signal })
   return parseJson(res)
+}
+
+export async function fetchCandyCascadeGameDetail(
+  gameSlug: string,
+  signal?: AbortSignal,
+): Promise<CandyCascadeGameDetail> {
+  const res = await fetch(apiUrl(`/api/v1/games/${encodeURIComponent(gameSlug)}/`), { signal })
+  return parseJson(res)
+}
+
+export function normalizeCandyCascadeConfig(partial: CandyCascadeConfig): CandyCascadeConfig {
+  return {
+    ...partial,
+    jogo: {
+      ...partial.jogo,
+      chances: withDefaultChances(partial.jogo.chances),
+    },
+    historico_recente: partial.historico_recente ?? [],
+  }
 }
 
 export function normalizeWolfGoldConfig(partial: WolfGoldConfig): WolfGoldConfig {

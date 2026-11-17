@@ -72,6 +72,14 @@ Contrato: `../backend_cn/docs/contratos/roleta.md`
 
 Demais cards: `play: null` — botão “Em breve”.
 
+## Candy Cascade (Sweet Bonanza)
+
+Contrato: `../backend_cn/docs/contratos/candy-cascade.md`
+
+- Card **Sweet Bonanza** na home → `#/sweet-bonanza?game=sweet-bonanza`
+- API: `/api/v1/slots/candy-cascade/` (config, sessões, `girar/` com `aposta`, `aposta_extra`, `comprar_free_spins`)
+- Sessão em `localStorage` (`playhub_candy_cascade_sessao_id`); grade 6×5 + resumo de cascatas na UI
+
 ## Chances demo (casa × usuário)
 
 Contrato: `../backend_cn/docs/contratos/chances.md`
