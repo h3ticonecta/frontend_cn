@@ -1,4 +1,5 @@
-import type { HomeData } from '../types/playhub'
+import type { HomeData, Game } from '../types/playhub'
+import { DEFAULT_CHANCES } from '../types/chances'
 
 /**
  * Em dev, deixe vazio para usar o proxy do Vite (`/api` → Django).
@@ -65,6 +66,21 @@ export function apiUrl(path: string): string {
   return API_BASE ? `${API_BASE}${p}` : p
 }
 
+function normalizeGameCatalog(game: Game): Game {
+  return {
+    ...game,
+    percentual_casa: game.percentual_casa ?? DEFAULT_CHANCES.percentual_casa,
+    percentual_usuario: game.percentual_usuario ?? DEFAULT_CHANCES.percentual_usuario,
+  }
+}
+
+function normalizeHomeData(data: HomeData): HomeData {
+  return {
+    ...data,
+    games: data.games.map(normalizeGameCatalog),
+  }
+}
+
 function assertApiReady(): void {
   if (import.meta.env.PROD && apiBaseIssue) {
     throw new Error(getApiSetupMessage())
@@ -112,7 +128,7 @@ export async function fetchHome(signal?: AbortSignal): Promise<HomeData> {
     throw new Error(errorFromHttpBody(res.status, text))
   }
   try {
-    return JSON.parse(text) as HomeData
+    return normalizeHomeData(JSON.parse(text) as HomeData)
   } catch {
     throw new Error('Resposta da API não é JSON válido.')
   }

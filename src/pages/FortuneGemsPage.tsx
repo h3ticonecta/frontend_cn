@@ -5,6 +5,7 @@ import {
   fetchFortuneGemsSession,
   getStoredFortuneGemsSessionId,
 } from '../api/fortuneGems'
+import { ChancesDemoHint } from '../components/ChancesDemoHint'
 import { FortuneGemsCoinRain } from '../components/fortune-gems/FortuneGemsCoinRain'
 import { FortuneGemsReel } from '../components/fortune-gems/FortuneGemsReel'
 import { useFortuneGemsSpin } from '../hooks/useFortuneGemsSpin'
@@ -157,7 +158,10 @@ export function FortuneGemsPage({ gameSlug }: FortuneGemsPageProps) {
         <div className="fg-page__bar-inner">
           <div className="fg-brand">
             <BrandBlock />
-            <p className="fg-eyebrow-demo">Demo · fichas virtuais</p>
+            <p className="fg-eyebrow-demo">
+              Demo · fichas virtuais
+              {config?.jogo.chances && <ChancesDemoHint chances={config.jogo.chances} />}
+            </p>
           </div>
 
           <div className="fg-jackpot" aria-live="polite">

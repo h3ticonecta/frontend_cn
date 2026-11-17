@@ -3,6 +3,7 @@ import type {
   FortuneGemsGiroResult,
   FortuneGemsSessao,
 } from '../types/fortuneGems'
+import { normalizeFortuneGemsConfig } from './games'
 import { apiUrl } from './playhub'
 
 const SESSION_KEY = 'playhub_fortune_gems_sessao_id'
@@ -50,7 +51,7 @@ export async function fetchFortuneGemsConfig(
     apiUrl(`/api/v1/slots/fortune-gems/?jogo=${encodeURIComponent(jogo)}`),
     { signal },
   )
-  return parseJson(res)
+  return normalizeFortuneGemsConfig(await parseJson<FortuneGemsConfig>(res))
 }
 
 export async function createFortuneGemsSession(

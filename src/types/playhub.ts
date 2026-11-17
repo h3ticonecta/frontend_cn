@@ -9,6 +9,8 @@ export type GameCategory =
 
 export type GameBadge = 'novo' | 'hot' | 'jackpot' | null
 
+export type { Chances } from './chances'
+
 /** Metadados `play` do card (home e GET /games/{slug}/). */
 export interface GamePlayMetaRoleta {
   kind: 'roleta'
@@ -51,6 +53,9 @@ export interface Game {
   icon: string
   /** `null` para jogos só vitrine. */
   play: GamePlayMeta | null
+  /** Chances demo (catálogo); espelho de `Game` no Django Admin. */
+  percentual_casa: string
+  percentual_usuario: string
 }
 
 export interface CategoryTab {

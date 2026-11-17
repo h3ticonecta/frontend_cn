@@ -1,3 +1,4 @@
+import type { Chances } from './chances'
 import type { Game, GamePlayMetaRoleta } from './playhub'
 
 export interface RoletaMesa {
@@ -8,6 +9,7 @@ export interface RoletaMesa {
   aposta_minima: string
   aposta_maxima: string
   max_apostas_por_giro: number
+  chances: Chances
 }
 
 export interface TipoAposta {

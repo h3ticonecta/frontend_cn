@@ -1,4 +1,5 @@
 import type { WolfGoldConfig, WolfGoldSpinResult, WolfGoldSessao } from '../types/wolfGold'
+import { normalizeWolfGoldConfig } from './games'
 import { apiUrl } from './playhub'
 
 const SESSION_KEY = 'playhub_wolf_gold_sessao_id'
@@ -40,7 +41,7 @@ export function setWolfGoldSoundEnabled(on: boolean): void {
 
 export async function fetchWolfGoldConfig(jogo = 'wolf-gold', signal?: AbortSignal): Promise<WolfGoldConfig> {
   const res = await fetch(apiUrl(`/api/v1/slots/wolf-gold/?jogo=${encodeURIComponent(jogo)}`), { signal })
-  return parseJson(res)
+  return normalizeWolfGoldConfig(await parseJson<WolfGoldConfig>(res))
 }
 
 export async function createWolfGoldSession(jogoSlug = 'wolf-gold', apelido = ''): Promise<WolfGoldSessao> {

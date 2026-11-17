@@ -71,3 +71,12 @@ Contrato: `../backend_cn/docs/contratos/roleta.md`
 5. Sessão demo em `localStorage` (`playhub_roleta_sessao_id`).
 
 Demais cards: `play: null` — botão “Em breve”.
+
+## Chances demo (casa × usuário)
+
+Contrato: `../backend_cn/docs/contratos/chances.md`
+
+- O catálogo (`GET /api/v1/home/`, `GET /api/v1/games/`) expõe `percentual_casa` e `percentual_usuario` em cada `Game` (strings `"55.00"` / `"45.00"` por padrão).
+- Roleta, Fortune Gems e Wolf Gold recebem `mesa.chances` / `jogo.chances` no config jogável; tipos em `src/types/chances.ts`.
+- O frontend **não** envia percentuais em `POST …/girar/`; o viés é decidido no servidor a cada giro pago.
+- Badge opcional “Chances demo” nas telas jogáveis (tooltip informativo, sem promessa de RTP).

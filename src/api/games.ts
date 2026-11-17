@@ -1,3 +1,4 @@
+import { withDefaultChances } from '../lib/chances'
 import type { FortuneGemsConfig, FortuneGemsGameDetail } from '../types/fortuneGems'
 import type { WolfGoldConfig, WolfGoldGameDetail } from '../types/wolfGold'
 import type { RoletaConfig, RoletaGameDetail } from '../types/roleta'
@@ -27,6 +28,10 @@ export async function fetchRoletaGameDetail(
 export function normalizeRoletaConfig(partial: RoletaConfig): RoletaConfig {
   return {
     ...partial,
+    mesa: {
+      ...partial.mesa,
+      chances: withDefaultChances(partial.mesa.chances),
+    },
     historico_recente: partial.historico_recente ?? [],
   }
 }
@@ -42,6 +47,10 @@ export async function fetchFortuneGemsGameDetail(
 export function normalizeFortuneGemsConfig(partial: FortuneGemsConfig): FortuneGemsConfig {
   return {
     ...partial,
+    jogo: {
+      ...partial.jogo,
+      chances: withDefaultChances(partial.jogo.chances),
+    },
     historico_recente: partial.historico_recente ?? [],
   }
 }
@@ -57,6 +66,10 @@ export async function fetchWolfGoldGameDetail(
 export function normalizeWolfGoldConfig(partial: WolfGoldConfig): WolfGoldConfig {
   return {
     ...partial,
+    jogo: {
+      ...partial.jogo,
+      chances: withDefaultChances(partial.jogo.chances),
+    },
     historico_recente: partial.historico_recente ?? [],
   }
 }

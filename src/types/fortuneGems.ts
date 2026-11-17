@@ -1,3 +1,4 @@
+import type { Chances } from './chances'
 import type { Game, GamePlayMetaSlot } from './playhub'
 
 export interface FortuneGemsJogoConfig {
@@ -8,6 +9,7 @@ export interface FortuneGemsJogoConfig {
   aposta_minima: string
   aposta_maxima: string
   jackpot_exibicao: string
+  chances: Chances
 }
 
 export interface FortuneGemsSymbolConfig {

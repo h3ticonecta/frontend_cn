@@ -8,6 +8,7 @@ import {
   spinRoleta,
 } from '../api/roleta'
 import { loadRoletaBootstrap } from '../lib/loadRoletaBootstrap'
+import { ChancesDemoHint } from '../components/ChancesDemoHint'
 import { RoletaTable } from '../components/roleta/RoletaTable'
 import { RoletaWinCelebration } from '../components/roleta/RoletaWinCelebration'
 import { RoletaWheelVisual } from '../components/roleta/RoletaWheelVisual'
@@ -271,7 +272,10 @@ export function RoletaPage({ gameSlug }: RoletaPageProps) {
       <RoletaWinCelebration burstKey={celebrationKey} />
       <header className="roleta-page__head">
         <div>
-          <p className="roleta-page__eyebrow">Demo · fichas virtuais</p>
+          <p className="roleta-page__eyebrow">
+            Demo · fichas virtuais
+            {mesa?.chances && <ChancesDemoHint chances={mesa.chances} />}
+          </p>
           <h1 className="roleta-page__title">{mesa?.nome ?? 'Roleta'}</h1>
           <p className="roleta-page__sub">
             Variante europeia ({config.numeros.min}–{config.numeros.max}). Mín.{' '}

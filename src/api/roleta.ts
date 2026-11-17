@@ -4,6 +4,7 @@ import type {
   RoletaGiroResult,
   RoletaSessao,
 } from '../types/roleta'
+import { normalizeRoletaConfig } from './games'
 import { apiUrl } from './playhub'
 
 const SESSION_KEY = 'playhub_roleta_sessao_id'
@@ -59,7 +60,7 @@ export async function fetchRoletaConfig(
   const res = await fetch(apiUrl(`/api/v1/roleta/?mesa=${encodeURIComponent(mesa)}`), {
     signal,
   })
-  return parseJson(res)
+  return normalizeRoletaConfig(await parseJson<RoletaConfig>(res))
 }
 
 export async function createRoletaSession(

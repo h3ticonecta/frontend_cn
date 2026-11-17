@@ -1,3 +1,4 @@
+import type { Chances } from './chances'
 import type { Game, GamePlayMetaSlot } from './playhub'
 
 export type WolfGoldGrid = string[][] // [col][row]
@@ -11,6 +12,7 @@ export interface WolfGoldJogoConfig {
   aposta_maxima: string
   linhas: number
   jackpots: { mini: string; major: string; mega: string }
+  chances: Chances
 }
 
 export interface WolfGoldSymbolRow {

@@ -7,6 +7,7 @@ import {
   getWolfGoldSoundEnabled,
   setWolfGoldSoundEnabled,
 } from '../api/wolfGold'
+import { ChancesDemoHint } from '../components/ChancesDemoHint'
 import { WolfGoldCoinRain } from '../components/wolf-gold/WolfGoldCoinRain'
 import { WolfGoldReels } from '../components/wolf-gold/WolfGoldReels'
 import { useWolfGoldSpin } from '../hooks/useWolfGoldSpin'
@@ -131,7 +132,10 @@ export function WolfGoldPage({ gameSlug }: Props) {
       <div className="wg-wrap">
         <header className="wg-top">
           <div>
-            <p style={{ margin: 0, fontSize: '0.7rem', opacity: 0.8 }}>Demo · créditos virtuais</p>
+            <p style={{ margin: 0, fontSize: '0.7rem', opacity: 0.8 }}>
+              Demo · créditos virtuais
+              {jogo?.chances && <ChancesDemoHint chances={jogo.chances} />}
+            </p>
             <h1 className="wg-title">Wolf Gold — Wild Canyon</h1>
           </div>
           <a
