@@ -3,6 +3,7 @@ import { spinWolfGold } from '../api/wolfGold'
 import { REEL_SPIN_MS, REEL_STOP_STAGGER_MS, formatCredits } from '../lib/wolfGoldSymbols'
 import { getWolfGoldSoundEnabled } from '../api/wolfGold'
 import { playBonusFanfare, playSpinTick, playWinChime } from '../lib/wolfGoldSound'
+import type { WolfGoldWinLine } from '../lib/wolfGoldWinLines'
 import type { WolfGoldGrid, WolfGoldSessaoEstado, WolfGoldSpinResult } from '../types/wolfGold'
 
 const COLS = 5
@@ -35,7 +36,7 @@ export function useWolfGoldSpin(opts: {
   const [stoppedReels, setStoppedReels] = useState(COLS)
   const [lastWin, setLastWin] = useState(0)
   const [estado, setEstado] = useState<WolfGoldSessaoEstado | null>(null)
-  const [winLines, setWinLines] = useState<number[]>([])
+  const [winLines, setWinLines] = useState<WolfGoldWinLine[]>([])
   const [showCoins, setShowCoins] = useState(false)
   const [status, setStatus] = useState('Pronto para girar')
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null)
@@ -67,7 +68,13 @@ export function useWolfGoldSpin(opts: {
       setBalanceFromApi(result.saldo)
       const prize = Number(result.premio)
       setLastWin(prize)
-      setWinLines(result.detalhes.linhas_vencedoras?.map((w) => w.linha) ?? [])
+      setWinLines(
+        result.detalhes.linhas_vencedoras?.map((w) => ({
+          linha: w.linha,
+          padrao: w.padrao,
+          contagem: w.contagem,
+        })) ?? [],
+      )
       if (prize > 0) {
         setShowCoins(true)
         window.setTimeout(() => setShowCoins(false), 2800)
