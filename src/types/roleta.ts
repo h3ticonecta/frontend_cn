@@ -5,6 +5,7 @@ export interface RoletaMesa {
   slug: string
   nome: string
   variante: string
+  /** Fichas ao criar sessão (config da mesa). */
   saldo_inicial: string
   aposta_minima: string
   aposta_maxima: string

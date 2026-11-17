@@ -18,8 +18,13 @@ export async function loadRoletaBootstrap(
   signal?: AbortSignal,
 ): Promise<RoletaBootstrap> {
   const detail = await fetchRoletaGameDetail(gameSlug, signal)
-  const play = detail.play
-  if (!play || play.kind !== 'roleta') {
+  const play =
+    detail.play?.kind === 'roleta'
+      ? detail.play
+      : detail.card.play?.kind === 'roleta'
+        ? detail.card.play
+        : null
+  if (!play) {
     throw new Error('Este jogo não está vinculado à roleta.')
   }
 
